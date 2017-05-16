@@ -1,10 +1,10 @@
-import { ClientPage } from './app.po';
+import { AgentCustomTaskPage } from './app.po';
 
-describe('client App', function() {
-  let page: ClientPage;
+describe('agent-custom-task App', () => {
+  let page: AgentCustomTaskPage;
 
   beforeEach(() => {
-    page = new ClientPage();
+    page = new AgentCustomTaskPage();
   });
 
   it('should display message saying app works', () => {
