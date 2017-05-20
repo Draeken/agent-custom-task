@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$ag-customtask-primary: mat-palette($mat-blue-grey, 600, 200, 800);
+$ag-customtask-accent:  mat-palette($mat-yellow, A400, A200, A700);
+
+$ag-customtask-warn:    mat-palette($mat-red);
+
+$ag-customtask-theme: mat-light-theme($ag-customtask-primary, $ag-customtask-accent, $ag-customtask-warn);
+
+@include angular-material-theme($ag-customtask-theme);
