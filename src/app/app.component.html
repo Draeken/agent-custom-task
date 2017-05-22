@@ -1,4 +1,8 @@
-<h1>
-  {{title}}
-  <md-icon>public</md-icon>
-</h1>
+<app-toolbar></app-toolbar>
+<md-sidenav-container >
+  <md-sidenav mode="side" opened="false">test
+  </md-sidenav>
+  <router-outlet></router-outlet>
+  <router-outlet name="details"></router-outlet>
+  <app-creation></app-creation>
+</md-sidenav-container>

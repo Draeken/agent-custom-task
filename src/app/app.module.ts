@@ -1,26 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule, MdIconModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import 'hammerjs';
 
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { CreationModule } from './creation/creation.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { DetailViewerModule } from './detail-viewer/detail-viewer.module';
+
+import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
+    CoreModule,
     HttpModule,
-    MaterialModule,
-    BrowserAnimationsModule,
-    MdIconModule,
+    ToolbarModule,
+    CreationModule,
+    RecipesModule,
+    DetailViewerModule,
+    AppRoutingModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
