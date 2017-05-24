@@ -10,11 +10,12 @@ import { DetailViewerModule } from './detail-viewer/detail-viewer.module';
 
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
+
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     CoreModule,

@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 app.disable('trust proxy');
 app.use(morgan('combined'));
@@ -18,8 +19,10 @@ module.exports = (options) => {
 
   app.use('/admin', require('./admin/router.js')({ autoSchedule: options.autoSchedule }));
   app.use('/api', require('./api/router.js')({ autoSchedule: options.autoSchedule }));
+  app.use('/user', require('./user/router.js')({ autoSchedule: options.autoSchedule }));
 
-  app.use((req, res) => res.sendStatus(404));
+  app.use(express.static(path.join(__dirname, '../dist')));
+  app.all('/*', (req, res) => res.sendFile('index.html', { root: 'dist' }));
 
   app.use((err, req, res, next) => {
     if (res.headersSent) {

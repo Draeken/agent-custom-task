@@ -1,18 +1,25 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { MdSidenavModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { recipesStateAndDispatcherProvider } from './recipes-state/state-dispatcher.provider';
+import { WindowRef } from './window.provider';
+import { UserService } from './user.service';
+
 @NgModule({
   imports: [
-    CommonModule
+    BrowserModule
   ],
   declarations: [],
   exports: [
-    BrowserModule,
     BrowserAnimationsModule,
     MdSidenavModule
+  ],
+  providers: [
+    ...recipesStateAndDispatcherProvider,
+    WindowRef,
+    UserService
   ]
 })
 export class CoreModule {
