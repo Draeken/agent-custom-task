@@ -1,0 +1,8 @@
+<div [@transformRecipe]="state" class="main-container">
+  <div class="small-container" *ngIf="!isExtended">
+    <app-small-recipe [recipe]="recipe" (expand)="onExpand()"></app-small-recipe>
+  </div>
+  <div class="extended-container" *ngIf="isExtended">
+    <app-extended-recipe></app-extended-recipe>
+  </div>
+</div>

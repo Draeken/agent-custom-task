@@ -18,17 +18,34 @@ export class RecipesService {
               @Inject(recipesDispatcher) private dispatcher: Observer<RecipesAction>,
               @Inject(recipesState) private state: Observable<RecipesState>,
               private windowRef: WindowRef) {
-    this.initRecipes();
+    const recipes = this.initDrafts().concat(this.initRecipes());
+    this.dispatcher.next(new UpdateRecipesAction(recipes));
   }
 
-  private initRecipes(): void {
-    let draft: Recipe[];
+  get filteredRecipes(): Observable<Recipe[]> {
+    return this.state;
+  }
+
+  get allRecipes(): Observable<Recipe[]> {
+    return this.state;
+  }
+
+  private initRecipes(): Recipe[] {
+    // Http request;
+    return [];
+  }
+
+  private initDrafts(): Recipe[] {
+    let draft: Recipe[] = [];
     try {
       draft = JSON.parse(localStorage.getItem(this.draftKey));
+      if (!draft) { draft = []; }
     } catch (e) {
       console.error(e);
       draft = [];
     }
+    return draft;
+    // this.dispatcher.next(new UpdateRecipesAction(draft));
   }
 
   private getServerAPIAddress(): string {

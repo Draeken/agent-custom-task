@@ -1,0 +1,6 @@
+<div class="container" (click)="onClick()">
+  <app-recipe
+    *ngFor="let recipe of recipes | async"
+    [recipe]="recipe"
+    [extended]="extendedRecipe"></app-recipe>
+</div>

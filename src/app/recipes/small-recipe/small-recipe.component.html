@@ -1,0 +1,4 @@
+<div class="container">
+  <div [appStateIndicator]="recipe.state" class="state-indicator"></div>
+  <div (click)="onClickToExpand($event)">{{ recipe.title || 'New recipe...' }}</div>
+</div>

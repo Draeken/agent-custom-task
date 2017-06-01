@@ -1,0 +1,7 @@
+@import '~@angular/material/theming';
+
+.mat-toolbar {
+  @include mat-elevation(4);
+  z-index: 1;
+  position: fixed;
+}

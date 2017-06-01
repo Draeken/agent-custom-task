@@ -5,7 +5,7 @@ module.exports = (options) => {
   const asOpt = { autoSchedule: options.autoSchedule };
   /**
    * body: { temp_token: token }
-   *
+   * response: { token: token }
    */
   router.post('/login', useragent.express(), require('./login.controller')(asOpt));
 

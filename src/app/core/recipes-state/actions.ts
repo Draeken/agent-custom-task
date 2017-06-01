@@ -5,7 +5,7 @@ export class UpdateRecipesAction {
 }
 
 export class UpdateRecipeInstancesAction {
-  constructor(public instances: Task[]) {}
+  constructor(public instances: Task[], public host: Recipe) {}
 }
 
 export class AddRecipeAction {

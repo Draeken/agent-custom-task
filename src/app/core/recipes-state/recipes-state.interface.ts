@@ -41,18 +41,34 @@ export interface Task {
 
 export enum RecipeState {
   Active,
-  Archive
+  Archive,
+  Draft,
+  New
 }
 
 export interface Recipe {
+  id?: string;
   title: string;
+  description: string;
   state: RecipeState;
   atomic: AtomicTask;
   reccurence: TimeBoundary;
   restriction: TimeRestriction[];
   links: LinkTask[];
-  isDraft: boolean;
   instances: Task[];
 }
 
 export type RecipesState = Recipe[];
+
+export function recipeFactory(): Recipe {
+  return {
+    title: '',
+    description: '',
+    atomic: { },
+    instances: [],
+    links: [],
+    reccurence: {},
+    restriction: [],
+    state: RecipeState.New
+  };
+}

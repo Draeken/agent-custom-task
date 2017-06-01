@@ -1,8 +1,9 @@
-<app-toolbar></app-toolbar>
-<md-sidenav-container >
-  <md-sidenav mode="side" opened="false">test
+<app-toolbar [title]="title"></app-toolbar>
+<md-sidenav-container>
+  <md-sidenav mode="side" opened="true">test
   </md-sidenav>
-  <router-outlet></router-outlet>
-  <router-outlet name="details"></router-outlet>
-  <app-creation></app-creation>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+    <router-outlet name="details"></router-outlet>
+  </div>
 </md-sidenav-container>
