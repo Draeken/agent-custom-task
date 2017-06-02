@@ -5,11 +5,11 @@ export class UpdateRecipesAction {
 }
 
 export class UpdateRecipeInstancesAction {
-  constructor(public instances: Task[], public host: Recipe) {}
+  constructor(public instances: Task[], public host: Recipe) { throw new Error('unimplemented'); }
 }
 
 export class AddRecipeAction {
-  constructor(public recipe: Recipe) {}
+  constructor(public recipe: Recipe) { throw new Error('unimplemented'); }
 }
 
 export class UpdateRecipeAction {
@@ -17,7 +17,7 @@ export class UpdateRecipeAction {
 }
 
 export class RemoveRecipeAction {
-  constructor(public recipe: Recipe) {}
+  constructor(public recipe: Recipe) { throw new Error('unimplemented'); }
 }
 
 export type RecipesAction =

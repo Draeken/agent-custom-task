@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@mixin edit-info-dialog($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  .ag-dialog-actions {
+    color: mat-color($accent, 800);
+  }
+}

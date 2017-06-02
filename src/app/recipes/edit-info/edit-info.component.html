@@ -1,3 +1,14 @@
-<p>
-  edit-info works!
-</p>
+<md-card>
+  <md-card-title>
+    <div class="header">
+      <div class="title">Recipe info</div>
+      <div class="action">
+        <button md-icon-button (click)="openDialog()"><md-icon>edit</md-icon></button>
+      </div>
+    </div>
+  </md-card-title>
+  <md-card-content>
+    <div class="entry-title">{{ recipe.title | noEmpty:"No title" }}</div>
+    <div class="entry-description">{{ recipe.description | noEmpty:"No description" }}</div>
+  </md-card-content>
+</md-card>

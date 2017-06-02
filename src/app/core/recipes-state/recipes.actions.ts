@@ -13,6 +13,8 @@ export function recipesHandler(initState: RecipesState, actions: Observable<Reci
   return <Observable<RecipesState>>actions.scan((recipes: RecipesState, action: RecipesAction) => {
     if (action instanceof UpdateRecipesAction) {
       return updateRecipes(recipes, action);
+    } else if (action instanceof UpdateRecipeAction) {
+      return updateRecipe(recipes, action);
     } else {
       return recipes;
     }
@@ -21,5 +23,16 @@ export function recipesHandler(initState: RecipesState, actions: Observable<Reci
 
 
 function updateRecipes(recipes: RecipesState, action: UpdateRecipesAction): RecipesState {
-  return [...action.recipes];
+  return action.recipes.slice();
+}
+
+function updateRecipe(recipes: RecipesState, action: UpdateRecipeAction): RecipesState {
+  const result = recipes.slice();
+  const i = result.findIndex(r => r === action.legacyRecipe);
+  if (i === -1) {
+    result.push(action.newRecipe);
+  } else {
+    result[i] = action.newRecipe;
+  }
+  return result;
 }

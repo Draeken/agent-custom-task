@@ -8,7 +8,7 @@ import { trigger,
 export const transformRecipe: AnimationTriggerMetadata = trigger('transformRecipe', [
   state('extanded', style({
     width: '75%',
-    height: '64px'
+    height: '75vh'
   })),
   state('minimized', style({
     width: '50%',

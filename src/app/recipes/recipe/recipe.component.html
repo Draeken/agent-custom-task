@@ -3,6 +3,6 @@
     <app-small-recipe [recipe]="recipe" (expand)="onExpand()"></app-small-recipe>
   </div>
   <div class="extended-container" *ngIf="isExtended">
-    <app-extended-recipe></app-extended-recipe>
+    <app-extended-recipe [recipe]="recipe"></app-extended-recipe>
   </div>
 </div>

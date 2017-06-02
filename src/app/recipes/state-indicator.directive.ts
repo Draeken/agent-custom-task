@@ -1,10 +1,10 @@
-import { RecipeState } from '../core/recipes-state/recipes-state.interface';
-
 import { Input,
          Directive,
          ElementRef,
          OnChanges,
          SimpleChanges } from '@angular/core';
+
+import { RecipeState } from '../core/recipes-state/recipe-state.enum';
 
 @Directive({
   selector: '[appStateIndicator]'

@@ -1,0 +1,16 @@
+<h2 md-dialog-title>Recipe info</h2>
+<md-dialog-content>
+  <div [formGroup]="infoForm">
+    <md-input-container [color]="'accent'">
+      <input mdInput formControlName="title" placeholder="Title" required />
+      <md-error>Title is required</md-error>
+    </md-input-container>
+    <md-input-container [color]="'accent'">
+      <input mdInput formControlName="description" placeholder="Description" />
+    </md-input-container>
+  </div>
+</md-dialog-content>
+<md-dialog-actions class="ag-dialog-actions">
+  <button md-button md-dialog-close>cancel</button>
+  <button md-button [md-dialog-close]="infoForm">ok</button>
+</md-dialog-actions>

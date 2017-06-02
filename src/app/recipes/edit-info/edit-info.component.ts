@@ -1,11 +1,16 @@
 import { Component,
          OnInit,
+         OnChanges,
+         SimpleChanges,
          Input,
-         Output } from '@angular/core';
-import { FormBuilder,
-         FormGroup,
-         Validators } from '@angular/forms';
+         Output,
+         EventEmitter } from '@angular/core';
+import { MdDialog } from '@angular/material';
+import { FormGroup } from '@angular/forms';
 
+import { Recipe } from '../../core/recipes-state/recipes-state.interface';
+import { EditInfoDialogComponent,
+         DataInfoDialog} from '../edit-info-dialog/edit-info-dialog.component';
 
 @Component({
   selector: 'app-edit-info',
@@ -13,24 +18,32 @@ import { FormBuilder,
   styleUrls: ['./edit-info.component.scss']
 })
 export class EditInfoComponent implements OnInit {
-  infoForm: FormGroup;
+  @Input() recipe: Recipe;
 
-  @Input() title: string;
+  @Output() change = new EventEmitter<void>();
 
-  @Input() description: string;
-
-  constructor(private formBuilder: FormBuilder) {
-    this.createForm();
+  constructor(private dialog: MdDialog) {
   }
 
   ngOnInit() {
   }
 
-  private createForm() {
-    this.infoForm = this.formBuilder.group({
-      title: [this.title],
-      description: this.description
-    })
+  openDialog() {
+    const data: DataInfoDialog = {
+      title: this.recipe.title,
+      description: this.recipe.description
+    };
+    const dialogRef = this.dialog.open(EditInfoDialogComponent, {
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(this.handleDialogResult.bind(this));
   }
 
+  private handleDialogResult(result: FormGroup): void {
+    if (!result.dirty) { return; }
+    const value: DataInfoDialog = result.value;
+    this.recipe.title = value.title;
+    this.recipe.description = value.description;
+    this.change.emit(result.value);
+  }
 }

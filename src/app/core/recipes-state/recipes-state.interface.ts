@@ -1,3 +1,5 @@
+import { RecipeState, RestrictionCondition, RestrictionKind } from './recipe-state.enum';
+
 export interface TimeBoundary {
   target?: number;
   min?: number;
@@ -8,18 +10,6 @@ export interface AtomicTask {
   duration?: TimeBoundary;
   start?: TimeBoundary;
   end?: TimeBoundary;
-}
-
-export enum RestrictionKind {
-  Hour,
-  Weekday,
-  Day,
-  Month
-}
-
-export enum RestrictionCondition {
-  InRange,
-  OutRange
 }
 
 export interface TimeRestriction {
@@ -39,13 +29,6 @@ export interface Task {
   end: number;
 }
 
-export enum RecipeState {
-  Active,
-  Archive,
-  Draft,
-  New
-}
-
 export interface Recipe {
   id?: string;
   title: string;
@@ -58,17 +41,4 @@ export interface Recipe {
   instances: Task[];
 }
 
-export type RecipesState = Recipe[];
-
-export function recipeFactory(): Recipe {
-  return {
-    title: '',
-    description: '',
-    atomic: { },
-    instances: [],
-    links: [],
-    reccurence: {},
-    restriction: [],
-    state: RecipeState.New
-  };
-}
+ export type RecipesState = Recipe[];
