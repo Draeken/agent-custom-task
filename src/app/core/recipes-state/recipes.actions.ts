@@ -8,7 +8,7 @@ import { AddRecipeAction,
          UpdateRecipeAction,
          UpdateRecipeInstancesAction,
          UpdateRecipesAction } from './actions';
-
+import { RecipeHelper } from './recipe-helper';
 export function recipesHandler(initState: RecipesState, actions: Observable<RecipesAction>): Observable<RecipesState> {
   return <Observable<RecipesState>>actions.scan((recipes: RecipesState, action: RecipesAction) => {
     if (action instanceof UpdateRecipesAction) {
@@ -23,7 +23,9 @@ export function recipesHandler(initState: RecipesState, actions: Observable<Reci
 
 
 function updateRecipes(recipes: RecipesState, action: UpdateRecipesAction): RecipesState {
-  return action.recipes.slice();
+  const list = action.recipes.slice();
+  list.unshift(RecipeHelper.recipeFactory());
+  return list;
 }
 
 function updateRecipe(recipes: RecipesState, action: UpdateRecipeAction): RecipesState {
@@ -34,5 +36,6 @@ function updateRecipe(recipes: RecipesState, action: UpdateRecipeAction): Recipe
   } else {
     result[i] = action.newRecipe;
   }
+  result.unshift(RecipeHelper.recipeFactory());
   return result;
 }

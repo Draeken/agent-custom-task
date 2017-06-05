@@ -4,6 +4,7 @@ import { Component,
          SimpleChanges,
          Input,
          Output,
+         ChangeDetectionStrategy,
          EventEmitter } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { FormGroup } from '@angular/forms';
@@ -15,7 +16,8 @@ import { EditInfoDialogComponent,
 @Component({
   selector: 'app-edit-info',
   templateUrl: './edit-info.component.html',
-  styleUrls: ['./edit-info.component.scss']
+  styleUrls: ['./edit-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditInfoComponent implements OnInit {
   @Input() recipe: Recipe;

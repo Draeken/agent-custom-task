@@ -1,5 +1,5 @@
 <div class="container" (click)="onClick()">
   <app-recipe
-    *ngFor="let recipe of recipes | async"
+    *ngFor="let recipe of recipes | async; trackBy: trackByFn"
     [recipe]="recipe"></app-recipe>
 </div>

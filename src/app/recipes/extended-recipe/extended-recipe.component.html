@@ -1,8 +1,7 @@
 <div class="main-container">
-  <div class="settings">
+  <div class="settings" (click)="onClick($event)">
     <app-edit-info
       [recipe]="recipeUpdate"
       (change)="onChange()"></app-edit-info>
-
   </div>
 </div>

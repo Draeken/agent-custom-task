@@ -1,9 +1,17 @@
 import { Recipe } from './recipes-state.interface';
 import { RecipeState } from './recipe-state.enum';
 
+const idGenerator = (function* idGen() {
+  let id = 0;
+  while (true) {
+    yield id++;
+  }
+})();
+
 export class RecipeHelper {
   static recipeFactory(): Recipe {
     return {
+      id: `${idGenerator.next().value}`,
       title: '',
       description: '',
       atomic: { },

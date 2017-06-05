@@ -1,18 +1,23 @@
-import { AfterViewInit, Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit,
+         Component,
+         OnInit,
+         ViewChildren,
+         ChangeDetectionStrategy,
+         QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/withLatestFrom';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
-import { RecipeHelper } from '../../core/recipes-state/recipe-helper';
 import { RecipesService } from '../recipes.service';
-
 import { RecipeComponent } from '../recipe/recipe.component';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.scss']
+  styleUrls: ['./recipe-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipeListComponent implements OnInit, AfterViewInit {
   private recipes: Observable<Recipe[]>;
@@ -23,18 +28,18 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   constructor(private recipesService: RecipesService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.recipes = this.recipesService.filteredRecipes.map(recipes => {
+    this.recipes = this.recipesService.filteredRecipes; /*.map(recipes => {
       const res = recipes.slice();
       res.unshift(RecipeHelper.recipeFactory());
       return res;
-    });
+    });*/
   }
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    Observable.combineLatest(this.route.params, this.recipeComponents.changes).subscribe((result: [Params, any]) => {
-      const params = result[0];
+    this.route.params.subscribe((result: Params) => {
+      const params = result;
       console.log('params', params);
       const id = params['id'] || '';
       const instance = params['instance'] || '';
@@ -52,6 +57,10 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   onClick() {
     console.log('user click on main container.');
     this.router.navigate(['/']);
+  }
+
+  private trackByFn(i: number, item: Recipe): string {
+    return item.id;
   }
 
 }

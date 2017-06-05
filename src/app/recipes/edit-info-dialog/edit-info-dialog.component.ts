@@ -1,6 +1,7 @@
 import { Component,
          OnInit,
          Input,
+         ChangeDetectionStrategy,
          Inject } from '@angular/core';
 import { FormBuilder,
          FormGroup,
@@ -16,7 +17,8 @@ export interface DataInfoDialog {
 @Component({
   selector: 'app-edit-info-dialog',
   templateUrl: './edit-info-dialog.component.html',
-  styleUrls: ['./edit-info-dialog.component.scss']
+  styleUrls: ['./edit-info-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditInfoDialogComponent implements OnInit {
   private infoForm: FormGroup;

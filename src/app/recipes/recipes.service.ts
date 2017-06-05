@@ -8,6 +8,7 @@ import { recipesDispatcher,
          recipesState } from '../core/recipes-state/state-dispatcher.provider';
 import { RecipesAction,
          UpdateRecipesAction } from '../core/recipes-state/actions';
+import { RecipeHelper } from '../core/recipes-state/recipe-helper';
 import { WindowRef } from '../core/window.provider';
 
 @Injectable()
