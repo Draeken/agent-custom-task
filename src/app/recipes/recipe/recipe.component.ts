@@ -50,7 +50,7 @@ export class RecipeComponent implements OnInit {
   }
 
   private setExtended(v: boolean) {
-    if (this.isExtended === v) { return; }
+    if (v === this.isExtended) { return; }
     this.isExtended = v;
     this.state = v ? 'extanded' : 'minimized';
     this.ref.markForCheck();
@@ -58,7 +58,6 @@ export class RecipeComponent implements OnInit {
 
   private recordRouterState() {
     this.router.navigate(['recipe/', this.recipe.id]);
-    console.log('save to router');
   }
 
 }

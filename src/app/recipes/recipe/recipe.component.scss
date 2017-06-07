@@ -1,12 +1,27 @@
+@import '~@angular/material/theming';
+
 :host {
   display: flex;
   justify-content: center;
 }
 
 .main-container {
-  overflow: auto;
   background-color: white;
+  position: relative;
+
+  &::before {
+    bottom: 0px;
+    box-shadow: 0 -1px 0 map_get($mat-grey, 300), 0 0 2px $black-12-opacity, 0 2px 4px rgba(0,0,0,.24);
+    content: '';
+    display: block;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }
+
 .small-container {
   width: 100%;
   height: 100%;

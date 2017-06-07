@@ -8,11 +8,13 @@ import { trigger,
 export const transformRecipe: AnimationTriggerMetadata = trigger('transformRecipe', [
   state('extanded', style({
     width: '75%',
-    height: '75vh'
+    height: '75vh',
+    marginTop: '16px',
+    marginBottom: '16px',
   })),
   state('minimized', style({
     width: '50%',
-    height: '32px'
+    height: '48px'
   })),
   transition('extanded <=> minimized', [
     animate('200ms ease-in-out')

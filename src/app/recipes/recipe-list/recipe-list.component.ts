@@ -28,11 +28,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   constructor(private recipesService: RecipesService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.recipes = this.recipesService.filteredRecipes; /*.map(recipes => {
-      const res = recipes.slice();
-      res.unshift(RecipeHelper.recipeFactory());
-      return res;
-    });*/
+    this.recipes = this.recipesService.filteredRecipes;
   }
 
   ngOnInit() {}
@@ -40,12 +36,12 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.route.params.subscribe((result: Params) => {
       const params = result;
-      console.log('params', params);
-      const id = params['id'] || '';
+      const expandedId = params['id'] || '';
+      if (!expandedId) { return; }
       const instance = params['instance'] || '';
-      if (id === '') { return; }
-      this.recipeComponents.map(recipeComp => {
-        if (recipeComp.recipe.id !== '' && recipeComp.recipe.id === id) {
+      this.recipeComponents.forEach((recipeComp, i) => {
+        const recipeId = recipeComp.recipe.id;
+        if (expandedId && recipeId !== '' && recipeId === expandedId) {
           recipeComp.expand(instance);
         } else {
           recipeComp.retract();

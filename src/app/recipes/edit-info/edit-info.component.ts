@@ -1,6 +1,7 @@
 import { Component,
          OnInit,
          OnChanges,
+         AfterViewInit,
          SimpleChanges,
          Input,
          Output,
@@ -19,7 +20,7 @@ import { EditInfoDialogComponent,
   styleUrls: ['./edit-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditInfoComponent implements OnInit {
+export class EditInfoComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() recipe: Recipe;
 
   @Output() change = new EventEmitter<void>();
@@ -28,6 +29,20 @@ export class EditInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(s: SimpleChanges) {
+    const recipeChange = s.recipe;
+    const recipe: Recipe = recipeChange.currentValue;
+    if (!recipeChange.isFirstChange && !recipe.title) {
+      setTimeout(() => this.openDialog(), 0);
+    }
+  }
+
+  ngAfterViewInit() {
+    if (!this.recipe.title) {
+      setTimeout(() => this.openDialog(), 0);
+    }
   }
 
   openDialog() {
@@ -42,7 +57,7 @@ export class EditInfoComponent implements OnInit {
   }
 
   private handleDialogResult(result: FormGroup): void {
-    if (!result.dirty) { return; }
+    if (!result || !result.dirty) { return; }
     const value: DataInfoDialog = result.value;
     this.recipe.title = value.title;
     this.recipe.description = value.description;

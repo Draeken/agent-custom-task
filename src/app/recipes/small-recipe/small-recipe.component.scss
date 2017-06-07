@@ -2,10 +2,20 @@
   width: 4px;
 }
 
-
 .container {
   display: flex;
   align-items: stretch;
   width: 100%;
   height: 100%;
+}
+
+.content {
+  font-size: 16;
+  padding: 0 16px 0 16px;
+  flex-grow: 1;
+  display: flex;
+}
+
+.info {
+  align-self: center;
 }
