@@ -1,0 +1,33 @@
+<h2 md-dialog-title>Time location</h2>
+<md-dialog-content>
+  <div [formGroup]="infoForm">
+    <div formGroupName="start">
+      <md-select (change)="startKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <md-tab-group [selectedIndex]=startKind disableRipple=true>
+        <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="max"></app-datetime-input></md-tab>
+      </md-tab-group>
+    </div>
+    <div formGroupName="duration">
+      <md-select (change)="durationKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <md-tab-group [selectedIndex]=durationKind disableRipple=true>
+        <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="max"></app-datetime-input></md-tab>
+      </md-tab-group>
+    </div>
+    <div formGroupName="end">
+      <md-select (change)="endKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <md-tab-group [selectedIndex]=endKind disableRipple=true>
+        <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>
+        <md-tab><app-datetime-input formControlName="max"></app-datetime-input></md-tab>
+      </md-tab-group>
+    </div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions class="ag-dialog-actions">
+  <button md-button md-dialog-close>cancel</button>
+  <button md-button [md-dialog-close]="infoForm">ok</button>
+</md-dialog-actions>

@@ -1,0 +1,15 @@
+<md-card class="mat-elevation-z">
+  <md-card-title>
+    <div class="header">
+      <div class="title">Time location</div>
+      <div class="action">
+        <button md-icon-button (click)="openDialog()"><md-icon>edit</md-icon></button>
+      </div>
+    </div>
+  </md-card-title>
+  <md-card-content>
+    <div class="entry-start">{{ recipe.atomic.start | timeBoundary }}</div>
+    <div class="entry-length">{{ recipe.atomic.length | timeBoundary:false }}</div>
+    <div class="entry-end">{{ recipe.atomic.end | timeBoundary:true:false }}</div>
+  </md-card-content>
+</md-card>

@@ -1,6 +1,5 @@
 import { Component,
          OnInit,
-         Input,
          ChangeDetectionStrategy,
          Inject } from '@angular/core';
 import { FormBuilder,
@@ -32,7 +31,7 @@ export class EditInfoDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  private createForm() {
+  private createForm(): void {
     this.infoForm = this.formBuilder.group({
       title: [this.data.title, Validators.required],
       description: this.data.description

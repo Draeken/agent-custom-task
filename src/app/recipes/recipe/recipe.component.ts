@@ -8,7 +8,7 @@ import { Component,
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
-import { transformRecipe } from './recipe-animations';
+import { transformRecipe } from './recipe.animations';
 
 @Component({
   selector: 'app-recipe',

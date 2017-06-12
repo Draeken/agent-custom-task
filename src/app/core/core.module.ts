@@ -2,6 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MdSidenavModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { recipesStateAndDispatcherProvider } from './recipes-state/state-dispatcher.provider';
 import { WindowRef } from './window.provider';
@@ -9,12 +10,14 @@ import { UserService } from './user.service';
 
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    FlexLayoutModule
   ],
   declarations: [],
   exports: [
     BrowserAnimationsModule,
-    MdSidenavModule
+    MdSidenavModule,
+    FlexLayoutModule
   ],
   providers: [
     ...recipesStateAndDispatcherProvider,

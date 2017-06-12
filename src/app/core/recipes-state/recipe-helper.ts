@@ -14,7 +14,11 @@ export class RecipeHelper {
       id: `${idGenerator.next().value}`,
       title: '',
       description: '',
-      atomic: { },
+      atomic: {
+        start: {},
+        duration: {},
+        end: {}
+      },
       instances: [],
       links: [],
       reccurence: {},

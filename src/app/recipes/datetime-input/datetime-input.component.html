@@ -1,0 +1,10 @@
+<div (blur)="onTouched()">
+  <md-input-container [color]="'accent'">
+    <input #dateInput mdInput [value]="startDate" [mdDatepicker]="datePicker" placeholder="{{datePlaceholder}}">
+    <button mdSuffix [mdDatepickerToggle]="datePicker"></button>
+  </md-input-container>
+  <md-datepicker #datePicker [startAt]="startDate" (selectedChanged)="onChange($event, hourInput.value)"></md-datepicker>
+  <md-input-container [color]="'accent'">
+    <input #hourInput mdInput type="time" [value]="startHour" placeholder="{{hourPlaceholder}}" (change)="onChange(datePicker._selected, hourInput.value)">
+  </md-input-container>
+</div>

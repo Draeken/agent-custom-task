@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdDialogModule,
-         MdInputModule } from '@angular/material';
+         MdInputModule,
+         MdDatepickerModule,
+         MdSelectModule,
+         MdTabsModule,
+         MdNativeDateModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
@@ -16,6 +20,10 @@ import { ExtendedRecipeComponent } from './extended-recipe/extended-recipe.compo
 import { EditInfoComponent } from './edit-info/edit-info.component';
 import { NoEmptyPipe } from './no-empty.pipe';
 import { EditInfoDialogComponent } from './edit-info-dialog/edit-info-dialog.component';
+import { EditAtomicComponent } from './edit-atomic/edit-atomic.component';
+import { TimeBoundaryPipe } from './time-boundary.pipe';
+import { EditAtomicDialogComponent } from './edit-atomic-dialog/edit-atomic-dialog.component';
+import { DatetimeInputComponent } from './datetime-input/datetime-input.component';
 
 @NgModule({
   imports: [
@@ -23,7 +31,11 @@ import { EditInfoDialogComponent } from './edit-info-dialog/edit-info-dialog.com
     RecipesRoutingModule,
     ReactiveFormsModule,
     MdDialogModule,
-    MdInputModule
+    MdInputModule,
+    MdDatepickerModule,
+    MdSelectModule,
+    MdTabsModule,
+    MdNativeDateModule
   ],
   declarations: [
     RecipeComponent,
@@ -33,10 +45,15 @@ import { EditInfoDialogComponent } from './edit-info-dialog/edit-info-dialog.com
     ExtendedRecipeComponent,
     EditInfoComponent,
     NoEmptyPipe,
-    EditInfoDialogComponent
+    EditInfoDialogComponent,
+    EditAtomicComponent,
+    TimeBoundaryPipe,
+    EditAtomicDialogComponent,
+    DatetimeInputComponent
   ],
   entryComponents: [
-    EditInfoDialogComponent
+    EditInfoDialogComponent,
+    EditAtomicDialogComponent
   ],
   providers: [
     RecipesService,
