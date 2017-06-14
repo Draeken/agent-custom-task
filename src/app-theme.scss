@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 
 @import 'app/recipes/edit-info-dialog/edit-info-dialog.component-theme';
+@import 'app/recipes/edit-atomic-dialog/edit-atomic-dialog.component-theme';
 
 @include mat-core();
 
@@ -14,3 +15,4 @@ $ag-customtask-theme: mat-light-theme($ag-customtask-primary, $ag-customtask-acc
 @include angular-material-theme($ag-customtask-theme);
 
 @include edit-info-dialog($ag-customtask-theme);
+@include edit-atomic-dialog($ag-customtask-theme);

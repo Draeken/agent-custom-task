@@ -8,7 +8,7 @@ import { Component,
 import { Observer } from 'rxjs/Observer';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
-import { RecipeState } from '../../core/recipes-state/recipe-state.enum';
+import { RecipeStatus } from '../../core/recipes-state/recipe-state.enum';
 import { recipesDispatcher } from '../../core/recipes-state/state-dispatcher.provider';
 import { RecipesAction,
          UpdateRecipeAction } from '../../core/recipes-state/actions';
@@ -40,8 +40,8 @@ export class ExtendedRecipeComponent implements OnInit, OnChanges {
   }
 
   private onChange(): void {
-    if (this.recipeUpdate.state === RecipeState.New) {
-      this.recipeUpdate.state = RecipeState.Draft;
+    if (this.recipeUpdate.status === RecipeStatus.New) {
+      this.recipeUpdate.status = RecipeStatus.Draft;
     }
     this.dispatcher.next(new UpdateRecipeAction(this.recipe, this.recipeUpdate));
   }

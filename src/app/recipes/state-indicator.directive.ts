@@ -4,14 +4,14 @@ import { Input,
          OnChanges,
          SimpleChanges } from '@angular/core';
 
-import { RecipeState } from '../core/recipes-state/recipe-state.enum';
+import { RecipeStatus } from '../core/recipes-state/recipe-state.enum';
 
 @Directive({
   selector: '[appStateIndicator]'
 })
 export class StateIndicatorDirective implements OnChanges {
 
-  @Input('appStateIndicator') state: RecipeState;
+  @Input('appStateIndicator') state: RecipeStatus;
 
   constructor(private el: ElementRef) { }
 
@@ -20,13 +20,13 @@ export class StateIndicatorDirective implements OnChanges {
     this.el.nativeElement.style.backgroundColor = this.getColor(stateChange.currentValue);
   }
 
-  private getColor(state: RecipeState): string {
+  private getColor(state: RecipeStatus): string {
     switch (state) {
-      case RecipeState.Active:
+      case RecipeStatus.Active:
         return '#4CAF50';
-      case RecipeState.Archive:
+      case RecipeStatus.Archive:
         return '#607D8B';
-      case RecipeState.Draft:
+      case RecipeStatus.Draft:
         return '#FFC107';
       default:
         return '';

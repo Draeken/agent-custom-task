@@ -1,4 +1,4 @@
-import { RecipeState, RestrictionCondition, RestrictionKind } from './recipe-state.enum';
+import { RecipeStatus, RestrictionCondition, RestrictionKind } from './recipe-state.enum';
 
 export interface TimeBoundary {
   target?: number;
@@ -33,7 +33,7 @@ export interface Recipe {
   id: string;
   title: string;
   description: string;
-  state: RecipeState;
+  status: RecipeStatus;
   atomic: AtomicTask;
   reccurence: TimeBoundary;
   restriction: TimeRestriction[];

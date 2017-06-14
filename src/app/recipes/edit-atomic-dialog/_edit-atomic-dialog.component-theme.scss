@@ -1,0 +1,23 @@
+@import '~@angular/material/theming';
+
+@mixin edit-atomic-dialog($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .ag-dialog-actions {
+    color: mat-color($accent, 800);
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: mat-color($foreground, secondary-text);
+  }
+
+  md-dialog-content {
+    color: mat-color($foreground, text);
+  }
+}

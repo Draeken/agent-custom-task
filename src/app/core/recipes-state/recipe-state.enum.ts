@@ -10,7 +10,7 @@ export enum RestrictionCondition {
   OutRange
 }
 
-export enum RecipeState {
+export enum RecipeStatus {
   Active,
   Archive,
   Draft,

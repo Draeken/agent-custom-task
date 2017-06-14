@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/scan';
 
 import { RecipesState } from './recipes-state.interface';
+import { RecipeStatus } from './recipe-state.enum';
 import { AddRecipeAction,
          RecipesAction,
          RemoveRecipeAction,
@@ -36,6 +37,6 @@ function updateRecipe(recipes: RecipesState, action: UpdateRecipeAction): Recipe
   } else {
     result[i] = action.newRecipe;
   }
-  result.unshift(RecipeHelper.recipeFactory());
+  if (!result.some(recipe => recipe.status === RecipeStatus.New)) { result.unshift(RecipeHelper.recipeFactory()); }
   return result;
 }

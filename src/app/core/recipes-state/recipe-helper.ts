@@ -1,5 +1,5 @@
 import { Recipe } from './recipes-state.interface';
-import { RecipeState } from './recipe-state.enum';
+import { RecipeStatus } from './recipe-state.enum';
 
 const idGenerator = (function* idGen() {
   let id = 0;
@@ -23,7 +23,7 @@ export class RecipeHelper {
       links: [],
       reccurence: {},
       restriction: [],
-      state: RecipeState.New
+      status: RecipeStatus.New
     };
   }
 

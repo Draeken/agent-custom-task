@@ -24,6 +24,8 @@ import { EditAtomicComponent } from './edit-atomic/edit-atomic.component';
 import { TimeBoundaryPipe } from './time-boundary.pipe';
 import { EditAtomicDialogComponent } from './edit-atomic-dialog/edit-atomic-dialog.component';
 import { DatetimeInputComponent } from './datetime-input/datetime-input.component';
+import { DurationInputComponent } from './duration-input/duration-input.component';
+import { DurationPipe } from './duration.pipe';
 
 @NgModule({
   imports: [
@@ -49,7 +51,9 @@ import { DatetimeInputComponent } from './datetime-input/datetime-input.componen
     EditAtomicComponent,
     TimeBoundaryPipe,
     EditAtomicDialogComponent,
-    DatetimeInputComponent
+    DatetimeInputComponent,
+    DurationInputComponent,
+    DurationPipe
   ],
   entryComponents: [
     EditInfoDialogComponent,

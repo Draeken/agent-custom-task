@@ -8,6 +8,8 @@ import { ControlValueAccessor,
          NG_VALUE_ACCESSOR,
          NG_VALIDATORS,
          FormControl,
+         FormGroup,
+         Validators,
          Validator } from '@angular/forms';
 
 import * as moment from 'moment';
@@ -31,16 +33,25 @@ import * as moment from 'moment';
   ]
 })
 export class DatetimeInputComponent implements OnInit, ControlValueAccessor, Validator {
-  private startHour = '12:00';
-  private startDate: Date;
-
-  @Input() datePlaceholder = 'Select a date';
-  @Input() hourPlaceholder = 'Select an hour';
+  private form = new FormGroup({
+    date: new FormControl(null, [this.dateValidator]),
+    hour: new FormControl('12:00')
+  });
+  private startDate = new Date();
 
   onChangeFn = (_: number) => {};
   onTouchedFn = () => {};
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(private ref: ChangeDetectorRef) {
+    this.form.valueChanges.subscribe(value => {
+      const date = value.date;
+      const time = value.hour;
+      if (!date || !time) { return this.onChangeFn(undefined); }
+      const d = new Date(date);
+      this.startDate = d;
+      this.onChangeFn(d.setHours.apply(d, time.split(':')));
+    });
+  }
 
   ngOnInit() {
   }
@@ -48,9 +59,11 @@ export class DatetimeInputComponent implements OnInit, ControlValueAccessor, Val
   writeValue(value: number): void {
     if (!value) { return; }
     const d = new Date(value);
-    this.startDate = d;
-    this.startHour = moment(d).format('HH:mm');
-    this.ref.markForCheck();
+    const hour = moment(d).format('HH:mm');
+    this.form.patchValue({
+      date: d,
+      hour: hour
+    });
   }
 
   registerOnChange(fn: (_: number) => void): void {
@@ -60,18 +73,10 @@ export class DatetimeInputComponent implements OnInit, ControlValueAccessor, Val
   registerOnTouched(fn: () => void): void { this.onTouchedFn = fn; }
 
   validate(c: FormControl) {
-    if (c.value === undefined || (Number.isInteger(c.value) && c.value > 0)) { return null; }
-    return {
-      numberFormatError: {
-        valid: false
-      }
-    };
+    return this.form.errors;
   }
 
-  private onChange(date: Date, time: string) {
-    if (!date || !time) { return this.onChangeFn(undefined); }
-    const d = new Date(date);
-    this.onChangeFn(d.setHours.apply(d, time.split(':')));
+  private dateValidator(control: FormControl): { [key: string]: any } {
+    return control.errors;
   }
-
 }

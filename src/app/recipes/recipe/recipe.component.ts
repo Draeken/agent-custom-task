@@ -40,7 +40,6 @@ export class RecipeComponent implements OnInit {
 
   retract(): void {
     this.instanceExtended = '';
-    console.warn('retract', this.recipe);
     this.setExtended(false);
   }
 

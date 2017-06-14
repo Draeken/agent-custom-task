@@ -2,7 +2,10 @@
 <md-dialog-content>
   <div [formGroup]="infoForm">
     <div formGroupName="start">
-      <md-select (change)="startKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <div class="category">
+        <h4>Start</h4>
+        <md-select (change)="startKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      </div>
       <md-tab-group [selectedIndex]=startKind disableRipple=true>
         <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
         <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>
@@ -10,15 +13,21 @@
       </md-tab-group>
     </div>
     <div formGroupName="duration">
-      <md-select (change)="durationKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <div class="category">
+        <h4>Duration</h4>
+        <md-select (change)="durationKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      </div>
       <md-tab-group [selectedIndex]=durationKind disableRipple=true>
-        <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
-        <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>
-        <md-tab><app-datetime-input formControlName="max"></app-datetime-input></md-tab>
+        <md-tab><app-duration-input formControlName="min"></app-duration-input></md-tab>
+        <md-tab><app-duration-input formControlName="target"></app-duration-input></md-tab>
+        <md-tab><app-duration-input formControlName="max"></app-duration-input></md-tab>
       </md-tab-group>
     </div>
     <div formGroupName="end">
-      <md-select (change)="endKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      <div class="category">
+        <h4>End</h4>
+        <md-select (change)="endKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      </div>
       <md-tab-group [selectedIndex]=endKind disableRipple=true>
         <md-tab><app-datetime-input formControlName="min"></app-datetime-input></md-tab>
         <md-tab><app-datetime-input formControlName="target"></app-datetime-input></md-tab>

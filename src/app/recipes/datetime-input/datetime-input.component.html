@@ -1,10 +1,11 @@
-<div (blur)="onTouched()">
+<div [formGroup]="form" (blur)="onTouched()">
   <md-input-container [color]="'accent'">
-    <input #dateInput mdInput [value]="startDate" [mdDatepicker]="datePicker" placeholder="{{datePlaceholder}}">
+    <input formControlName="date" mdInput [mdDatepicker]="datePicker">
     <button mdSuffix [mdDatepickerToggle]="datePicker"></button>
+    <md-error>Invalid date</md-error>
   </md-input-container>
-  <md-datepicker #datePicker [startAt]="startDate" (selectedChanged)="onChange($event, hourInput.value)"></md-datepicker>
+  <md-datepicker #datePicker [startAt]="startDate"></md-datepicker>
   <md-input-container [color]="'accent'">
-    <input #hourInput mdInput type="time" [value]="startHour" placeholder="{{hourPlaceholder}}" (change)="onChange(datePicker._selected, hourInput.value)">
+    <input formControlName="hour" #hourInput mdInput type="time">
   </md-input-container>
 </div>
