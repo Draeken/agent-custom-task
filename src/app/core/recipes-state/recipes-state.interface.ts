@@ -35,7 +35,7 @@ export interface Recipe {
   description: string;
   status: RecipeStatus;
   atomic: AtomicTask;
-  reccurence: TimeBoundary;
+  recurrence: TimeBoundary;
   restriction: TimeRestriction[];
   links: LinkTask[];
   instances: Task[];

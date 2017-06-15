@@ -2,7 +2,6 @@ import { Component,
          OnInit,
          Input,
          forwardRef,
-         ChangeDetectorRef,
          ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor,
          NG_VALUE_ACCESSOR,
@@ -42,7 +41,7 @@ export class DatetimeInputComponent implements OnInit, ControlValueAccessor, Val
   onChangeFn = (_: number) => {};
   onTouchedFn = () => {};
 
-  constructor(private ref: ChangeDetectorRef) {
+  constructor() {
     this.form.valueChanges.subscribe(value => {
       const date = value.date;
       const time = value.hour;

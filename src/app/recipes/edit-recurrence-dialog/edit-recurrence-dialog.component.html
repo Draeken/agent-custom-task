@@ -1,0 +1,20 @@
+<h2 md-dialog-title>Recurrence</h2>
+<md-dialog-content>
+  <div [formGroup]="infoForm">
+    <div formGroupName="recurrence">
+      <div class="category">
+        <h4>Recurrence</h4>
+        <md-select (change)="recurrenceKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+      </div>
+      <md-tab-group [selectedIndex]=recurrenceKind disableRipple=true>
+        <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="min"></app-duration-input></md-tab>
+        <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="target"></app-duration-input></md-tab>
+        <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="max"></app-duration-input></md-tab>
+      </md-tab-group>
+    </div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions class="ag-dialog-actions">
+  <button md-button md-dialog-close>cancel</button>
+  <button md-button [md-dialog-close]="infoForm">ok</button>
+</md-dialog-actions>

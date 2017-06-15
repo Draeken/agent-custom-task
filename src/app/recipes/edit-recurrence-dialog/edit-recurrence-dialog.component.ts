@@ -12,32 +12,35 @@ import { FormBuilder,
 import { MdDialogRef,
          MdSelect,
          MD_DIALOG_DATA } from '@angular/material';
-import 'rxjs/add/operator/distinctUntilChanged';
 
 import { TimeBoundary } from '../../core/recipes-state/recipes-state.interface';
 import { AbstractDialogTb } from '../abstract-dialog-tb';
 
 export interface DataInfoDialog {
-  start: TimeBoundary;
-  duration: TimeBoundary;
-  end: TimeBoundary;
+  recurrence: TimeBoundary;
 }
 
 @Component({
-  selector: 'app-edit-atomic-dialog',
-  templateUrl: './edit-atomic-dialog.component.html',
-  styleUrls: ['./edit-atomic-dialog.component.scss'],
+  selector: 'app-edit-recurrence-dialog',
+  templateUrl: './edit-recurrence-dialog.component.html',
+  styleUrls: ['./edit-recurrence-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditAtomicDialogComponent extends AbstractDialogTb implements OnInit, AfterViewInit {
+export class EditRecurrenceDialogComponent extends AbstractDialogTb implements OnInit, AfterViewInit {
   private infoForm: FormGroup;
-  private startKind = 1;
-  private durationKind = 1;
-  private endKind = 1;
+  private recurrenceKind = 1;
+  private units = [
+    { value: 1000 * 60, view: 'min' },
+    { value: 1000 * 3600, view: 'hour' },
+    { value: 1000 * 3600 * 24, view: 'day' },
+    { value: 1000 * 3600 * 24 * 7, view: 'week' },
+    { value: 1000 * 60 * 43800, view: 'month' },
+    { value: 1000 * 60 * 525600, view: 'year' },
+  ];
 
   @ViewChildren(MdSelect) selects: QueryList<MdSelect>;
 
-  constructor(private dialogRef: MdDialogRef<EditAtomicDialogComponent>,
+  constructor(private dialogRef: MdDialogRef<EditRecurrenceDialogComponent>,
               @Inject(MD_DIALOG_DATA) private data: DataInfoDialog,
               formBuilder: FormBuilder) {
     super(formBuilder);
@@ -57,11 +60,10 @@ export class EditAtomicDialogComponent extends AbstractDialogTb implements OnIni
     }, 0);
   }
 
-  private createForm(): void {
+  private createForm() {
     this.infoForm = this.formBuilder.group({
-      start: this.timeBoundaryGroup(this.data.start),
-      duration: this.timeBoundaryGroup(this.data.duration),
-      end: this.timeBoundaryGroup(this.data.end)
+      recurrence: this.timeBoundaryGroup(this.data.recurrence)
     });
   }
+
 }

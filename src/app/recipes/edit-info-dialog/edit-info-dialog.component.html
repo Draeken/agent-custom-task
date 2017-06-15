@@ -6,7 +6,7 @@
       <md-error>Title is required</md-error>
     </md-input-container>
     <md-input-container [color]="'accent'">
-      <input mdInput formControlName="description" placeholder="Description" />
+      <textarea mdInput formControlName="description" mdTextareaAutosize maxlength="2000" placeholder="Description"></textarea>
     </md-input-container>
   </div>
 </md-dialog-content>

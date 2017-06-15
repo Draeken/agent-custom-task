@@ -9,7 +9,7 @@
   </md-card-title>
   <md-card-content>
     <div class="entry-start">{{ recipe.atomic.start | timeBoundary }}</div>
-    <div class="entry-length">{{ recipe.atomic.length | timeBoundary:false }}</div>
+    <div class="entry-length">{{ recipe.atomic.duration | timeBoundary:false }}</div>
     <div class="entry-end">{{ recipe.atomic.end | timeBoundary:true:false }}</div>
   </md-card-content>
 </md-card>

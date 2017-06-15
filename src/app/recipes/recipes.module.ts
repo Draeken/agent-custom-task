@@ -26,6 +26,8 @@ import { EditAtomicDialogComponent } from './edit-atomic-dialog/edit-atomic-dial
 import { DatetimeInputComponent } from './datetime-input/datetime-input.component';
 import { DurationInputComponent } from './duration-input/duration-input.component';
 import { DurationPipe } from './duration.pipe';
+import { EditRecurrenceComponent } from './edit-recurrence/edit-recurrence.component';
+import { EditRecurrenceDialogComponent } from './edit-recurrence-dialog/edit-recurrence-dialog.component';
 
 @NgModule({
   imports: [
@@ -53,11 +55,14 @@ import { DurationPipe } from './duration.pipe';
     EditAtomicDialogComponent,
     DatetimeInputComponent,
     DurationInputComponent,
-    DurationPipe
+    DurationPipe,
+    EditRecurrenceComponent,
+    EditRecurrenceDialogComponent,
   ],
   entryComponents: [
     EditInfoDialogComponent,
-    EditAtomicDialogComponent
+    EditAtomicDialogComponent,
+    EditRecurrenceDialogComponent
   ],
   providers: [
     RecipesService,

@@ -21,7 +21,7 @@ export class RecipeHelper {
       },
       instances: [],
       links: [],
-      reccurence: {},
+      recurrence: {},
       restriction: [],
       status: RecipeStatus.New
     };
