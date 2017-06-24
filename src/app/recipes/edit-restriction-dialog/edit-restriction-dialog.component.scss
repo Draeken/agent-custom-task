@@ -1,0 +1,27 @@
+.ag-dialog-actions {
+  justify-content: flex-end;
+  button {
+    text-transform: uppercase;
+  }
+}
+
+app-datetime-input {
+  display: block;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.condition-choice {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding: 12px 0;
+}
+
+md-radio-button {
+  margin: 0 10px;
+}

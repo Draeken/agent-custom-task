@@ -1,0 +1,23 @@
+<h2 md-dialog-title>Time restrictions</h2>
+<md-dialog-content>
+  <div [formGroup]="form">
+    <md-tab-group dynamicHeight>
+      <md-tab *ngFor="let kind of kinds" [label]="kind">
+        <div [formGroupName]="kind">
+          <div class="condition-choice">
+            Restrict to:
+            <md-radio-group formControlName="condition">
+              <md-radio-button *ngFor="let condition of conditions" [value]="condition.value">{{ condition.view }}</md-radio-button>
+            </md-radio-group>
+          </div>
+          <app-dateranges-input [type]="kind" formControlName="ranges"></app-dateranges-input>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions class="ag-dialog-actions">
+  <button md-button md-dialog-close>cancel</button>
+  <button md-button [md-dialog-close]="form">ok</button>
+</md-dialog-actions>

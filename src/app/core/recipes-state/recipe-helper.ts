@@ -22,7 +22,7 @@ export class RecipeHelper {
       instances: [],
       links: [],
       recurrence: {},
-      restriction: [],
+      restrictions: {},
       status: RecipeStatus.New
     };
   }
@@ -30,7 +30,6 @@ export class RecipeHelper {
   static shallowClone(base: Recipe): Recipe {
     const clone: Recipe = Object.assign({}, base);
     clone.instances = base.instances.slice();
-    clone.restriction = base.restriction.slice();
     clone.links = base.links.slice();
     return clone;
   }

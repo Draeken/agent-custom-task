@@ -7,8 +7,7 @@ import { Component,
          QueryList,
          ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder,
-         FormGroup,
-         Validators } from '@angular/forms';
+         FormGroup } from '@angular/forms';
 import { MdDialogRef,
          MdSelect,
          MD_DIALOG_DATA } from '@angular/material';

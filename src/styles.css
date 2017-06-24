@@ -12,6 +12,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.mat-tab-group .mat-tab-header {
+.mat-tab-group[disableRipple=true] .mat-tab-header {
   display: none;
 }

@@ -1,3 +1,4 @@
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdDialogModule,
@@ -5,6 +6,9 @@ import { MdDialogModule,
          MdDatepickerModule,
          MdSelectModule,
          MdTabsModule,
+         MdRadioModule,
+         GestureConfig,
+         MdChipsModule,
          MdNativeDateModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -28,6 +32,10 @@ import { DurationInputComponent } from './duration-input/duration-input.componen
 import { DurationPipe } from './duration.pipe';
 import { EditRecurrenceComponent } from './edit-recurrence/edit-recurrence.component';
 import { EditRecurrenceDialogComponent } from './edit-recurrence-dialog/edit-recurrence-dialog.component';
+import { EditRestrictionComponent } from './edit-restriction/edit-restriction.component';
+import { EditRestrictionDialogComponent } from './edit-restriction-dialog/edit-restriction-dialog.component';
+import { DaterangesInputComponent } from './dateranges-input/dateranges-input.component';
+import { HourInputComponent } from './hour-input/hour-input.component';
 
 @NgModule({
   imports: [
@@ -39,6 +47,8 @@ import { EditRecurrenceDialogComponent } from './edit-recurrence-dialog/edit-rec
     MdDatepickerModule,
     MdSelectModule,
     MdTabsModule,
+    MdRadioModule,
+    MdChipsModule,
     MdNativeDateModule
   ],
   declarations: [
@@ -58,15 +68,21 @@ import { EditRecurrenceDialogComponent } from './edit-recurrence-dialog/edit-rec
     DurationPipe,
     EditRecurrenceComponent,
     EditRecurrenceDialogComponent,
+    EditRestrictionComponent,
+    EditRestrictionDialogComponent,
+    DaterangesInputComponent,
+    HourInputComponent
   ],
   entryComponents: [
     EditInfoDialogComponent,
     EditAtomicDialogComponent,
-    EditRecurrenceDialogComponent
+    EditRecurrenceDialogComponent,
+    EditRestrictionDialogComponent
   ],
   providers: [
     RecipesService,
     AuthGuardService,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ]
 })
 export class RecipesModule { }
