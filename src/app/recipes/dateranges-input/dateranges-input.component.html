@@ -1,7 +1,7 @@
 <div class="main-container">
   <div class="ranges">
     <md-chip-list selectable="false">
-      <md-chip *ngFor="let range of ranges | async" (click)="onRangeFocused(range)" [selected]="range.focused" (select)="onChipSelected($event)">
+      <md-chip *ngFor="let range of ranges | async" (click)="onRangeFocused(range, $event)" [selected]="range.focused" (select)="onChipSelected($event)">
         st: {{ range.start }} nd: {{ range.end }} {{ range.focused }}
       </md-chip>
       <md-chip color="accent" selected (click)="onNewRange()">
@@ -22,14 +22,16 @@
       </div>
     </div>
   </div>
-  <div (click)="onClick($event)" (slide)="onSlide($event)" (slidestart)="onSlideStart($event)" (slideend)="onSlideEnd()" style="position: relative;">
-    <div class="selection" *ngFor="let range of ranges | async"
-      [class.option-focused]="range.focused" [style.top]="range.start / maxTime * 100 + '%'"
-      [style.bottom]="100 - range.end / maxTime * 100 + '%'"
-      (click)="onRangeFocused(range)"></div>
-    <div class="options-container">
-      <div *ngFor="let tile of tiles" class="option">
-        {{ tile.view }}
+  <div (click)="onCancelRange()">
+    <div class="options-input" (click)="onClick($event)" (slide)="onSlide($event)" (slidestart)="onSlideStart($event)" (slideend)="onSlideEnd()" style="position: relative;">
+      <div class="selection" *ngFor="let range of ranges | async"
+        [class.option-focused]="range.focused" [style.top]="range.start / maxTime * 100 + '%'"
+        [style.bottom]="100 - range.end / maxTime * 100 + '%'"
+        (click)="onRangeFocused(range, $event)"></div>
+      <div class="options-container">
+        <div *ngFor="let tile of tiles" class="option">
+          {{ tile.view }}
+        </div>
       </div>
     </div>
   </div>

@@ -13,6 +13,7 @@ import { ControlValueAccessor,
          NG_VALIDATORS,
          FormControl,
          FormGroup,
+         ValidationErrors,
          Validator } from '@angular/forms';
 import { HammerInput, MdChip } from '@angular/material';
 
@@ -134,6 +135,15 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
     return null;
   }
 
+  private validateForm(e: FormGroup): ValidationErrors {
+    if (e.get('start').value >= e.get('end').value) {
+      return {
+        'invalidRange': 'Invalid range'
+      };
+    }
+    return null;
+  }
+
   private handleChipSelected(chip: any): void {
     const t: HTMLElement = chip._elementRef.nativeElement;
     this.lastRangeDim = {
@@ -151,6 +161,7 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
 
   private onClick(event: MouseEvent) {
     console.log(event);
+    event.stopPropagation();
   }
 
   private onSlide(event: HammerInput) {
@@ -178,7 +189,8 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
     this.ranges.next(ranges);
   }
 
-  private onRangeFocused(range: RangeInput): void {
+  private onRangeFocused(range: RangeInput, event: MouseEvent): void {
+    event.stopPropagation();
     const ranges = this.ranges.value;
     ranges.forEach(r => r.focused = false);
     range.focused = true;
@@ -216,6 +228,7 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
 
   private onCancelRange(): void {
     const fRange = this.focusedRange.value;
+    if (!fRange) { return; }
     if (fRange.start === null || fRange.end === null) {
       this.ranges.next(this.ranges.value.filter(r => r !== fRange));
     } else {
@@ -226,7 +239,7 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
 
   private onApplyRange(): void {
     const fRange = this.focusedRange.value;
-    if (!fRange) { console.error(`Can't apply range.`); return this.onCancelRange(); }
+    if (!fRange || this.form.errors) { console.error(`Can't apply range.`); return this.onCancelRange(); }
     const formValue = this.form.value;
     if (formValue.start === null || formValue.end === null) { return this.onCancelRange(); }
     fRange.start = formValue.start;

@@ -38,6 +38,12 @@
   border-radius: 2px;
 }
 
+.options-input {
+  position: relative;
+  width: 50%;
+  left: 25%;
+}
+
 .options-container {
   display: flex;
   flex-direction: column;
@@ -48,7 +54,8 @@
   display: flex;
   padding: 5px;
   justify-content: center;
-  min-width: 50%;
+  width: 100%;
+  box-sizing: border-box;
   border-bottom: 1px solid lightgrey;
 }
 
