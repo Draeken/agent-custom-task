@@ -52,10 +52,11 @@ export class EditRestrictionDialogComponent implements OnInit {
   }
 
   private createTRGroup(tr: TimeRestriction): FormGroup {
-    return this.formBuilder.group({
+    const group = this.formBuilder.group({
       condition: tr ? tr.condition : 0,
-      ranges: tr ? tr.ranges : []
+      ranges: tr ? [tr.ranges] : [] // Handle array as [value, validators]
     });
+    return group;
   }
 
 }

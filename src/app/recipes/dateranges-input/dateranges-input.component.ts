@@ -75,12 +75,17 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
   private lastRangeDim: Dimension;
   private chipSelected: Subject<MdChip> = new Subject();
 
-  private onChangeFn = (_: number) => {};
+  private onChangeFn = (_: [number, number][]) => {};
   private onTouchedFn = () => {};
 
   constructor() {
     this.ranges.map(ranges => ranges.find(r => r.focused)).subscribe(range => this.focusedRange.next(range));
-    this.focusedRange.subscribe(range => this.form.setValue({ start: range ? range.start : null, end: range ? range.end : null }));
+    this.ranges.subscribe(ranges => this.onChangeFn(ranges.map(r => <[number, number]>[r.start, r.end])));
+    this.focusedRange.subscribe(range => {
+      this.form.reset();
+      if (!range) { return; }
+      this.form.setValue({ start: range.start, end: range.end });
+    });
     this.focusedRange
       .filter(r => r === undefined)
       .skip(2)
@@ -127,7 +132,7 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
     this.ranges.next(value.map(range => ({ start: range[0], end: range[1], focused: false })));
   }
 
-  registerOnChange(fn: (_: number) => void): void { this.onChangeFn = fn; }
+  registerOnChange(fn: (_: [number, number][]) => void): void { this.onChangeFn = fn; }
 
   registerOnTouched(fn: () => void): void { this.onTouchedFn = fn; }
 

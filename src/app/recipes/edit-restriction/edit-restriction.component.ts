@@ -7,7 +7,7 @@ import { Component,
 import { MdDialog } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
-import { Recipe } from '../../core/recipes-state/recipes-state.interface';
+import { Recipe, TimeRestrictions } from '../../core/recipes-state/recipes-state.interface';
 import { DataInfoDialog,
          EditRestrictionDialogComponent } from '../edit-restriction-dialog/edit-restriction-dialog.component';
 
@@ -40,8 +40,8 @@ export class EditRestrictionComponent implements OnInit {
 
   private handleDialogResult(result: FormGroup): void {
     if (!result || !result.dirty) { return; }
-    const value: DataInfoDialog = result.value;
-    this.recipe.restrictions = value.restrictions;
+    const value: TimeRestrictions = result.value;
+    this.recipe.restrictions = value;
     this.change.emit(result.value);
   }
 
