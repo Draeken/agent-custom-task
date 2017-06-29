@@ -36,6 +36,9 @@ import { EditRestrictionComponent } from './edit-restriction/edit-restriction.co
 import { EditRestrictionDialogComponent } from './edit-restriction-dialog/edit-restriction-dialog.component';
 import { DaterangesInputComponent } from './dateranges-input/dateranges-input.component';
 import { HourInputComponent } from './hour-input/hour-input.component';
+import { TimePipe } from './time.pipe';
+import { WeekdayInputComponent } from './weekday-input/weekday-input.component';
+import { MonthInputComponent } from './month-input/month-input.component';
 
 @NgModule({
   imports: [
@@ -71,7 +74,10 @@ import { HourInputComponent } from './hour-input/hour-input.component';
     EditRestrictionComponent,
     EditRestrictionDialogComponent,
     DaterangesInputComponent,
-    HourInputComponent
+    HourInputComponent,
+    TimePipe,
+    WeekdayInputComponent,
+    MonthInputComponent
   ],
   entryComponents: [
     EditInfoDialogComponent,

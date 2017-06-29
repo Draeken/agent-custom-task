@@ -1,0 +1,8 @@
+<div [formGroup]="form" (blur)="onTouched()">
+  <md-select formControlName="weekday" [placeholder]="weekdaysPlaceholder">
+    <md-option *ngFor="let weekday of weekdays" [value]="weekday.value">{{ weekday.view }}</md-option>
+  </md-select>
+  <md-input-container [color]="'accent'">
+    <input formControlName="time" mdInput type="time">
+  </md-input-container>
+</div>

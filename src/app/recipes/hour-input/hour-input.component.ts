@@ -1,11 +1,6 @@
 import { Component,
          OnInit,
-         OnChanges,
-         SimpleChanges,
-         Input,
-         ElementRef,
          forwardRef,
-         ViewChild,
          ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor,
          NG_VALUE_ACCESSOR,
@@ -14,7 +9,6 @@ import { ControlValueAccessor,
          FormGroup,
          Validators,
          Validator } from '@angular/forms';
-import { HammerInput } from '@angular/material';
 
 import * as moment from 'moment';
 
@@ -37,6 +31,7 @@ import * as moment from 'moment';
   ]
 })
 export class HourInputComponent implements OnInit, ControlValueAccessor, Validator {
+  private readonly maxValue = 60 * 24;
   private form = new FormGroup({
     time: new FormControl('', [Validators.required])
   });
@@ -60,7 +55,7 @@ export class HourInputComponent implements OnInit, ControlValueAccessor, Validat
 
   writeValue(value:  number): void {
     if (value == null) { return; }
-    if (value > 1440 || value < 0) { console.warn('Invalid value', value); return; }
+    if (value >= this.maxValue || value < 0) { console.warn('Invalid value', value); return; }
     this.form.setValue({
       time: `${this.padNumber(Math.floor(value / 60))}:${this.padNumber(value % 60)}`
     });

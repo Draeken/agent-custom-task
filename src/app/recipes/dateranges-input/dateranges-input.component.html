@@ -2,7 +2,7 @@
   <div class="ranges">
     <md-chip-list selectable="false">
       <md-chip *ngFor="let range of ranges | async" (click)="onRangeFocused(range, $event)" [selected]="range.focused" (select)="onChipSelected($event)">
-        st: {{ range.start }} nd: {{ range.end }} {{ range.focused }}
+        {{ range.start | time:type }} <md-icon>arrow_forward</md-icon> {{ range.end | time:type }}
       </md-chip>
       <md-chip color="accent" selected (click)="onNewRange()">
         New range <md-icon>add</md-icon>
@@ -12,8 +12,18 @@
       <div #editMask class="edit-mask">
         <div *ngSwitchCase="'hour'" class="range-inputs">
           <app-hour-input formControlName="start" style="margin-right: 5px"></app-hour-input>
-          to
+          <md-icon>arrow_forward</md-icon>
           <app-hour-input formControlName="end" style="margin-left: 15px"></app-hour-input>
+        </div>
+        <div *ngSwitchCase="'weekday'" class=range-inputs>
+          <app-weekday-input formControlName="start" defaultTime="00:00" style="margin-right: 5px"></app-weekday-input>
+          <md-icon>arrow_forward</md-icon>
+          <app-weekday-input formControlName="end" defaultTime="23:59" style="margin-left: 15px"></app-weekday-input>
+        </div>
+        <div *ngSwitchCase="'month'" class="range-inputs">
+          <app-month-input formControlName="start" style="margin-right: 5px"></app-month-input>
+          <md-icon>arrow_forward</md-icon>
+          <app-month-input formControlName="end" style="margin-left: 15px"></app-month-input>
         </div>
         <div class="actions">
           <button (click)="onCancelRange()" md-button color='accent'>cancel</button>

@@ -141,12 +141,7 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
   }
 
   private validateForm(e: FormGroup): ValidationErrors {
-    if (e.get('start').value >= e.get('end').value) {
-      return {
-        'invalidRange': 'Invalid range'
-      };
-    }
-    return null;
+    return e.errors;
   }
 
   private handleChipSelected(chip: any): void {
@@ -247,10 +242,22 @@ export class DaterangesInputComponent implements OnInit, OnChanges, ControlValue
     if (!fRange || this.form.errors) { console.error(`Can't apply range.`); return this.onCancelRange(); }
     const formValue = this.form.value;
     if (formValue.start === null || formValue.end === null) { return this.onCancelRange(); }
-    fRange.start = formValue.start;
-    fRange.end = formValue.end;
+    const ranges = this.ranges.value;
+    if (formValue.start > formValue.end) {
+      fRange.start = this.type !== 'month' ? 0 : 1;
+      fRange.end = formValue.end;
+      const newRange: RangeInput = {
+        start: formValue.start,
+        end: this.type !== 'month' ? this.maxTime - 1 : this.maxTime,
+        focused: false
+      };
+      ranges.push(newRange);
+    } else {
+      fRange.start = formValue.start;
+      fRange.end = formValue.end;
+    }
     fRange.focused = false;
-    this.ranges.next(this.ranges.value);
+    this.ranges.next(ranges);
   }
 
 
