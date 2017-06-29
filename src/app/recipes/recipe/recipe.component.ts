@@ -48,11 +48,13 @@ export class RecipeComponent implements OnInit {
     if (this.recipe.id !== undefined) { this.recordRouterState(); }
   }
 
-  private setExtended(v: boolean) {
-    if (v === this.isExtended) { return; }
-    this.isExtended = v;
-    this.state = v ? 'extanded' : 'minimized';
-    this.ref.markForCheck();
+  private setExtended(v: boolean): void {
+    setTimeout(() => {
+      if (v === this.isExtended) { return; }
+      this.isExtended = v;
+      this.state = v ? 'extanded' : 'minimized';
+      this.ref.markForCheck();
+    });
   }
 
   private recordRouterState() {
