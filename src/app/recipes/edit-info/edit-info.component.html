@@ -8,7 +8,13 @@
     </div>
   </md-card-title>
   <md-card-content>
-    <div class="entry-title">{{ recipe.title }}</div>
-    <div class="entry-description">{{ recipe.description }}</div>
+    <div class="entry-title" [style.display]="recipe.title ? 'block' : 'none'">
+      <h3>Name</h3>
+      {{ recipe.title }}
+    </div>
+    <div class="entry-description" [style.display]="recipe.description ? 'block' : 'none'">
+      <h3>Description</h3>
+      {{ recipe.description }}
+    </div>
   </md-card-content>
 </md-card>

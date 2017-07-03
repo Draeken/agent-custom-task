@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@mixin edit-info($theme) {
+  $foreground: map-get($theme, foreground);
+
+  h3 {
+    color: mat-color($foreground, secondary-text);
+  }
+}

@@ -3,3 +3,28 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+}
+
+.entry-restrictions {
+  md-icon {
+    @include md-icon-size(16px);
+    pointer-events: none;
+  }
+
+  md-chip {
+    display: inline-flex !important;
+  }
+}
+
+md-card-content {
+  h3 {
+    margin-bottom: 4px;
+    font-size: inherit;
+    font-weight: 500;
+  }
+}

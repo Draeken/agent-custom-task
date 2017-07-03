@@ -8,6 +8,29 @@
     </div>
   </md-card-title>
   <md-card-content>
-    <div class="entry-restrictions">{{ recipe.restriction }}</div>
+    <div class="entry-restrictions" *ngIf="displayHour">
+      <h3>Hour {{ recipe.restrictions.hour.condition == 0 ? 'in-range' : 'out-range' }}</h3>
+      <md-chip-list selectable="false">
+        <md-chip *ngFor="let range of recipe.restrictions.hour.ranges">
+          {{ range[0] | time:"hour" }} <md-icon>arrow_forward</md-icon> {{ range[1] | time:"hour" }}
+        </md-chip>
+      </md-chip-list>
+    </div>
+    <div class="entry-restrictions" *ngIf="displayWeekday">
+      <h3>Weekday {{ recipe.restrictions.weekday.condition == 0 ? 'in-range' : 'out-range' }}</h3>
+      <md-chip-list selectable="false">
+        <md-chip *ngFor="let range of recipe.restrictions.weekday.ranges">
+          {{ range[0] | time:"weekday" }} <md-icon>arrow_forward</md-icon> {{ range[1] | time:"weekday" }}
+        </md-chip>
+      </md-chip-list>
+    </div>
+    <div class="entry-restrictions" *ngIf="displayMonth">
+      <h3>Month {{ recipe.restrictions.month.condition == 0 ? 'in-range' : 'out-range' }}</h3>
+      <md-chip-list selectable="false">
+        <md-chip *ngFor="let range of recipe.restrictions.month.ranges">
+          {{ range[0] | time:"month" }} <md-icon>arrow_forward</md-icon> {{ range[1] | time:"month" }}
+        </md-chip>
+      </md-chip-list>
+    </div>
   </md-card-content>
 </md-card>

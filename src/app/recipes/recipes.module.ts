@@ -39,6 +39,8 @@ import { HourInputComponent } from './hour-input/hour-input.component';
 import { TimePipe } from './time.pipe';
 import { WeekdayInputComponent } from './weekday-input/weekday-input.component';
 import { MonthInputComponent } from './month-input/month-input.component';
+import { EditLinkComponent } from './edit-link/edit-link.component';
+import { EditLinkDialogComponent } from './edit-link-dialog/edit-link-dialog.component';
 
 @NgModule({
   imports: [
@@ -77,7 +79,9 @@ import { MonthInputComponent } from './month-input/month-input.component';
     HourInputComponent,
     TimePipe,
     WeekdayInputComponent,
-    MonthInputComponent
+    MonthInputComponent,
+    EditLinkComponent,
+    EditLinkDialogComponent
   ],
   entryComponents: [
     EditInfoDialogComponent,

@@ -1,0 +1,5 @@
+@import '~@angular/material/theming';
+
+@mixin edit-atomic($theme) {
+  $foreground: map-get($theme, foreground);
+}

@@ -1,7 +1,5 @@
 import { Component,
          OnInit,
-         OnChanges,
-         SimpleChanges,
          Input,
          Output,
          EventEmitter,
@@ -9,33 +7,25 @@ import { Component,
 import { MdDialog } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
-import { Recipe, TimeBoundary } from '../../core/recipes-state/recipes-state.interface';
+import { Recipe } from '../../core/recipes-state/recipes-state.interface';
 import { DataInfoDialog,
          EditRecurrenceDialogComponent } from '../edit-recurrence-dialog/edit-recurrence-dialog.component';
 
 @Component({
-  selector: 'app-edit-recurrence',
-  templateUrl: './edit-recurrence.component.html',
-  styleUrls: ['./edit-recurrence.component.scss'],
+  selector: 'app-edit-link',
+  templateUrl: './edit-link.component.html',
+  styleUrls: ['./edit-link.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditRecurrenceComponent implements OnInit, OnChanges {
+export class EditLinkComponent implements OnInit {
 
   @Input() recipe: Recipe;
 
   @Output() change = new EventEmitter<void>();
 
-  private displayRecu = false;
-
   constructor(private dialog: MdDialog) { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(s: SimpleChanges) {
-    const recipe: Recipe = s.recipe.currentValue;
-    if (!recipe) { return; }
-    this.displayRecu = this.isTimeBoundaryEmpty(recipe.recurrence) ? false : true;
   }
 
   openDialog() {
@@ -49,14 +39,11 @@ export class EditRecurrenceComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(this.handleDialogResult.bind(this));
   }
 
-  private isTimeBoundaryEmpty(obj: TimeBoundary): boolean {
-    return Object.keys(obj).length === 0 || (obj.max == null && obj.min  == null && obj.target == null);
-  }
-
   private handleDialogResult(result: FormGroup): void {
     if (!result || !result.dirty) { return; }
     const value: DataInfoDialog = result.value;
     this.recipe.recurrence = value.recurrence; // deep copy ?
     this.change.emit(result.value);
   }
+
 }

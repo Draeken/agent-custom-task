@@ -3,3 +3,11 @@
   justify-content: space-between;
   align-items: center;
 }
+
+md-card-content {
+  h3 {
+    margin-bottom: 4px;
+    font-size: inherit;
+    font-weight: 500;
+  }
+}

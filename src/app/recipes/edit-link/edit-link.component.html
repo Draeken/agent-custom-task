@@ -1,16 +1,13 @@
 <md-card class="mat-elevation-z">
   <md-card-title>
     <div class="header">
-      <div class="title">Recurrence</div>
+      <div class="title">Link</div>
       <div class="action">
         <button md-icon-button (click)="openDialog()"><md-icon>edit</md-icon></button>
       </div>
     </div>
   </md-card-title>
   <md-card-content>
-    <div class="entry-recurrence" [style.display]="displayRecu ? 'block' : 'none'">
-      <h3>Recurrence</h3>
-      {{ recipe.recurrence | timeBoundary:false }}
-    </div>
+    <div class="entry-link">{{ recipe.links }}</div>
   </md-card-content>
 </md-card>
