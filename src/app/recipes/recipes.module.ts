@@ -9,6 +9,7 @@ import { MdDialogModule,
          MdRadioModule,
          GestureConfig,
          MdChipsModule,
+         MdAutocompleteModule,
          MdNativeDateModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -41,6 +42,7 @@ import { WeekdayInputComponent } from './weekday-input/weekday-input.component';
 import { MonthInputComponent } from './month-input/month-input.component';
 import { EditLinkComponent } from './edit-link/edit-link.component';
 import { EditLinkDialogComponent } from './edit-link-dialog/edit-link-dialog.component';
+import { RecipeInputComponent } from './recipe-input/recipe-input.component';
 
 @NgModule({
   imports: [
@@ -54,6 +56,7 @@ import { EditLinkDialogComponent } from './edit-link-dialog/edit-link-dialog.com
     MdTabsModule,
     MdRadioModule,
     MdChipsModule,
+    MdAutocompleteModule,
     MdNativeDateModule
   ],
   declarations: [
@@ -81,13 +84,15 @@ import { EditLinkDialogComponent } from './edit-link-dialog/edit-link-dialog.com
     WeekdayInputComponent,
     MonthInputComponent,
     EditLinkComponent,
-    EditLinkDialogComponent
+    EditLinkDialogComponent,
+    RecipeInputComponent
   ],
   entryComponents: [
     EditInfoDialogComponent,
     EditAtomicDialogComponent,
     EditRecurrenceDialogComponent,
-    EditRestrictionDialogComponent
+    EditRestrictionDialogComponent,
+    EditLinkDialogComponent
   ],
   providers: [
     RecipesService,

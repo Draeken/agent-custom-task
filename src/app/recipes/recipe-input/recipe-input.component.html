@@ -1,0 +1,10 @@
+<div [formGroup]="form" (blur)="onTouched()">
+  <md-input-container>
+    <input type="text" mdInput formControlName="recipeId" [mdAutocomplete]="auto" />
+  </md-input-container>
+  <md-autocomplete #auto [displayWith]="displayRecipeOpt">
+    <md-option *ngFor="let recipeOpt of recipes | async" [value]="recipeOpt.id">
+      {{ recipeOpt.title }}
+    </md-option>
+  </md-autocomplete>
+</div>

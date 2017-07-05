@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
 import { DataInfoDialog,
-         EditRecurrenceDialogComponent } from '../edit-recurrence-dialog/edit-recurrence-dialog.component';
+         EditLinkDialogComponent } from '../edit-link-dialog/edit-link-dialog.component';
 
 @Component({
   selector: 'app-edit-link',
@@ -29,11 +29,11 @@ export class EditLinkComponent implements OnInit {
   }
 
   openDialog() {
-    const recurrence = this.recipe.recurrence;
+    const links = this.recipe.links;
     const data: DataInfoDialog = {
-      recurrence: recurrence
+      links: links
     };
-    const dialogRef = this.dialog.open(EditRecurrenceDialogComponent, {
+    const dialogRef = this.dialog.open(EditLinkDialogComponent, {
       data: data
     });
     dialogRef.afterClosed().subscribe(this.handleDialogResult.bind(this));
@@ -42,7 +42,7 @@ export class EditLinkComponent implements OnInit {
   private handleDialogResult(result: FormGroup): void {
     if (!result || !result.dirty) { return; }
     const value: DataInfoDialog = result.value;
-    this.recipe.recurrence = value.recurrence; // deep copy ?
+    this.recipe.links = value.links; // deep copy ?
     this.change.emit(result.value);
   }
 

@@ -26,7 +26,7 @@ export interface TimeRestrictions {
 export interface LinkTask {
   timeElapsed: TimeBoundary;
   kind: 'before' | 'after';
-  recipeTitle: string;
+  recipeId: string;
 }
 
 export interface Task {
