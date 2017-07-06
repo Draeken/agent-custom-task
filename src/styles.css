@@ -15,3 +15,7 @@ body {
 .mat-tab-group[disableRipple=true] .mat-tab-header {
   display: none;
 }
+
+.delayInput .mat-input-element {
+  width: 60px;
+}

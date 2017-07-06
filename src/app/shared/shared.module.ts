@@ -5,18 +5,23 @@ import { MdIconModule,
          MdButtonModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { RecipeIdPipe } from './recipe-id.pipe';
+
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
   ],
-  declarations: [],
+  declarations: [
+    RecipeIdPipe
+  ],
   exports: [
     CommonModule,
     MdIconModule,
     MdCardModule,
     MdButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    RecipeIdPipe
   ]
 })
 export class SharedModule { }

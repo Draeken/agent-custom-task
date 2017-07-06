@@ -1,0 +1,19 @@
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delayInput {
+  md-radio-group {
+    margin-bottom: 7px;
+    margin-right: 2vh;
+    height: 72px;
+  }
+
+  md-select {
+    height: 57px;
+    padding-top: 10px;
+    box-sizing: border-box;
+  }
+}

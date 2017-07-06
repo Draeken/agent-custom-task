@@ -43,6 +43,7 @@ import { MonthInputComponent } from './month-input/month-input.component';
 import { EditLinkComponent } from './edit-link/edit-link.component';
 import { EditLinkDialogComponent } from './edit-link-dialog/edit-link-dialog.component';
 import { RecipeInputComponent } from './recipe-input/recipe-input.component';
+import { LinkInputComponent } from './link-input/link-input.component';
 
 @NgModule({
   imports: [
@@ -85,7 +86,8 @@ import { RecipeInputComponent } from './recipe-input/recipe-input.component';
     MonthInputComponent,
     EditLinkComponent,
     EditLinkDialogComponent,
-    RecipeInputComponent
+    RecipeInputComponent,
+    LinkInputComponent
   ],
   entryComponents: [
     EditInfoDialogComponent,

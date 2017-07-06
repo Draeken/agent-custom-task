@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" (blur)="onTouched()">
   <div class="ranges">
     <md-chip-list selectable="false">
       <md-chip *ngFor="let range of ranges | async" (click)="onRangeFocused(range, $event)" [selected]="range.focused" (select)="onChipSelected($event)">

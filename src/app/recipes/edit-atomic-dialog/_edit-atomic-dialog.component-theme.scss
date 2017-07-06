@@ -20,4 +20,8 @@
   md-dialog-content {
     color: mat-color($foreground, text);
   }
+
+  .divider {
+    background-color: mat-color($foreground, divider);
+  }
 }

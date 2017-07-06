@@ -3,6 +3,7 @@ import { Component,
          Input,
          Inject,
          forwardRef,
+         ChangeDetectorRef,
          ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor,
          NG_VALUE_ACCESSOR,
@@ -14,12 +15,12 @@ import { ControlValueAccessor,
          Validator } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import { RecipesState,
          Recipe,
          LinkTask } from '../../core/recipes-state/recipes-state.interface';
-import { recipesDispatcher,
-         recipesState } from '../../core/recipes-state/state-dispatcher.provider';
+import { recipesState } from '../../core/recipes-state/state-dispatcher.provider';
 import { RecipeStatus } from '../../core/recipes-state/recipe-state.enum';
 
 @Component({
@@ -43,30 +44,40 @@ import { RecipeStatus } from '../../core/recipes-state/recipe-state.enum';
 export class RecipeInputComponent implements OnInit, ControlValueAccessor, Validator {
   private form: FormGroup;
   private recipes: Observable<RecipesState>;
+  private writeForm: Subject<string> = new Subject();
+
+  @Input() excluded: string[] = [];
 
   private onChangeFn = (_: string) => {};
   private onTouchedFn = () => {};
 
-  constructor(@Inject(recipesState) private state: Observable<RecipesState>) {}
+  constructor(@Inject(recipesState) private state: Observable<RecipesState>,
+              private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      recipeId: new FormControl(null)
+      recipe: new FormControl(null)
     });
-    this.recipes = this.getrecipeId().valueChanges
+    this.recipes = this.getRecipeController().valueChanges
       .startWith(null)
-      .withLatestFrom(this.state.map(recipes => recipes.filter(r => r.status !== RecipeStatus.New)))
-      .map(this.filterRecipeOpts);
+      .withLatestFrom(this.getRecipesObs.apply(this))
+      .map(this.filterRecipeOpts.bind(this));
     this.form.valueChanges
-      .withLatestFrom(this.recipes)
+      .withLatestFrom(this.getRecipesObs.apply(this))
       .subscribe(this.exportFormValues.bind(this));
+    this.writeForm
+      .withLatestFrom(this.getRecipesObs.apply(this))
+      .subscribe((values: [string, Recipe[]]) => {
+        const recipe = values[1].find(r => r.id === values[0]);
+        if (!recipe) { return; }
+        this.form.setValue({ recipe: recipe })
+        setTimeout(() => this.ref.markForCheck(), 0);
+      });
   }
 
   writeValue(value:  string): void {
     if (value == null) { return; }
-    this.form.setValue({
-      recipeId: value
-    });
+    this.writeForm.next(value);
   }
 
   registerOnChange(fn: (_: string) => void): void { this.onChangeFn = fn; }
@@ -77,27 +88,38 @@ export class RecipeInputComponent implements OnInit, ControlValueAccessor, Valid
     return c.errors;
   }
 
-  private getrecipeId(): AbstractControl {
-    return this.form.get('recipeId');
+  private getRecipesObs(): Observable<Recipe[]> {
+    return this.state.map(recipes => recipes.filter(
+      r => r.status !== RecipeStatus.New &&
+      !this.excluded.find(exc => exc === r.id)))
+  }
+
+  private getRecipeController(): AbstractControl {
+    return this.form.get('recipe');
   }
 
   private exportFormValues(values: [any, Recipe[]]): void {
     const recipes = values[1];
-    const id = values[0].recipeId;
+    const id = values[0].recipe.id;
     if (!recipes.find(recipe => recipe.id === id)) {
-      this.getrecipeId().setErrors({
+      this.getRecipeController().setErrors({
         'nomatch': `Doesn't match any recipe.`
       });
       return;
     }
-    this.getrecipeId().setErrors(null);
+    this.getRecipeController().setErrors(null);
     this.onChangeFn(id);
+  }
+
+  private displayRecipeOpt(recipeOpt: Recipe): string {
+    return recipeOpt ? recipeOpt.title : '';
   }
 
   private filterRecipeOpts(value: [string, Recipe[]]): Recipe[] {
     const title = value[0];
     const recipes = value[1];
     if (!title) { return recipes; }
-    return recipes.filter(recipe => new RegExp(`^${title}`, 'gi').test(recipe.title));
+    return recipes
+      .filter(recipe => new RegExp(`^${title}`, 'gi').test(recipe.title))
   }
 }

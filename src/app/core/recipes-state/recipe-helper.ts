@@ -1,4 +1,4 @@
-import { Recipe } from './recipes-state.interface';
+import { Recipe, TimeBoundary } from './recipes-state.interface';
 import { RecipeStatus } from './recipe-state.enum';
 
 const idGenerator = (function* idGen() {
@@ -25,6 +25,10 @@ export class RecipeHelper {
       restrictions: {},
       status: RecipeStatus.New
     };
+  }
+
+  static isTimeBoundaryEmpty(obj: TimeBoundary): boolean {
+    return Object.keys(obj).length === 0 || (obj.max == null && obj.min  == null && obj.target == null);
   }
 
   static shallowClone(base: Recipe): Recipe {

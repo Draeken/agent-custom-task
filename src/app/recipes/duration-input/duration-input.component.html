@@ -1,7 +1,7 @@
 <div (blur)="onTouched()" fxLayout fxLayoutAlign="space-between stretch">
   <md-input-container [color]="'accent'">
     <input  #durationInput mdInput [value]="duration | duration:selectedUnit"
-      type="number" (change)="onChange(durationInput.value)">
+      type="number" (change)="onChange(durationInput.value)" [placeholder]="placeholder">
   </md-input-container>
   <md-select (change)="selectedUnit=$event.value">
     <md-option *ngFor="let unit of units" [value]="unit.value">{{ unit.view }}</md-option>

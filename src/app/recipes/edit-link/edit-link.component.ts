@@ -1,13 +1,15 @@
 import { Component,
          OnInit,
          Input,
+         Inject,
          Output,
          EventEmitter,
          ChangeDetectionStrategy } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
-import { Recipe } from '../../core/recipes-state/recipes-state.interface';
+
+import { Recipe, RecipesState } from '../../core/recipes-state/recipes-state.interface';
 import { DataInfoDialog,
          EditLinkDialogComponent } from '../edit-link-dialog/edit-link-dialog.component';
 
@@ -31,7 +33,8 @@ export class EditLinkComponent implements OnInit {
   openDialog() {
     const links = this.recipe.links;
     const data: DataInfoDialog = {
-      links: links
+      links: links,
+      recipeId: this.recipe.id
     };
     const dialogRef = this.dialog.open(EditLinkDialogComponent, {
       data: data
@@ -39,11 +42,10 @@ export class EditLinkComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.handleDialogResult.bind(this));
   }
 
-  private handleDialogResult(result: FormGroup): void {
-    if (!result || !result.dirty) { return; }
-    const value: DataInfoDialog = result.value;
-    this.recipe.links = value.links; // deep copy ?
-    this.change.emit(result.value);
+  private handleDialogResult(result: DataInfoDialog): void {
+    if (!result) { return; }
+    this.recipe.links = result.links; // deep copy ?
+    this.change.emit();
   }
 
 }

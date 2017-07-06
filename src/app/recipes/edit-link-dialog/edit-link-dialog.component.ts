@@ -13,6 +13,7 @@ import { FormBuilder,
 import { MdSelect,
          MD_DIALOG_DATA } from '@angular/material';
 
+import { RecipeHelper } from '../../core/recipes-state/recipe-helper';
 import { Recipe,
          LinkTask } from '../../core/recipes-state/recipes-state.interface';
 import { RecipeStatus } from '../../core/recipes-state/recipe-state.enum';
@@ -20,6 +21,7 @@ import { AbstractDialogTb } from '../abstract-dialog-tb';
 
 export interface DataInfoDialog {
   links: LinkTask[];
+  recipeId: string;
 }
 
 @Component({
@@ -28,76 +30,60 @@ export interface DataInfoDialog {
   styleUrls: ['./edit-link-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditLinkDialogComponent extends AbstractDialogTb implements OnInit, AfterViewInit {
+export class EditLinkDialogComponent implements OnInit {
   private infoForm: FormGroup;
-  private selectedKind = 1;
-  private delayKinds: { value: string, view: string }[];
-  private units = [
-    { value: 1000 * 60, view: 'min' },
-    { value: 1000 * 3600, view: 'hour' },
-    { value: 1000 * 3600 * 24, view: 'day' },
-    { value: 1000 * 3600 * 24 * 7, view: 'week' },
-    { value: 1000 * 60 * 43800, view: 'month' },
-    { value: 1000 * 60 * 525600, view: 'year' },
-  ];
-
-  @ViewChildren(MdSelect) selects: QueryList<MdSelect>;
+  private payload: { links: LinkTask[] };
 
   constructor(@Inject(MD_DIALOG_DATA) private data: DataInfoDialog,
-              formBuilder: FormBuilder) {
-    super(formBuilder);
+              private formBuilder: FormBuilder) {
     this.createForm();
     this.infoForm.valueChanges
-      .startWith({ links: [] })
       .subscribe(this.handleFormChanges.bind(this));
-    this.delayKinds = [
-      { value: 'before', view: 'before' },
-      { value: 'after', view: 'after' },
-    ];
   }
 
   ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.setSelectsToDefault();
-  }
 
   get links(): FormArray {
     return this.infoForm.get('links') as FormArray;
   }
 
-  private handleFormChanges(formValue: DataInfoDialog): void {
-    if (formValue.links.length > 0 && this.links.controls.some(ctrl => ctrl.dirty)) { return; }
+  private handleFormChanges(formValue: any): void {
+    const links = formValue.links
+      .map(l => l.link)
+      .filter(l => l.kind != null && l.recipeId != null && !RecipeHelper.isTimeBoundaryEmpty(l.timeElapsed));
+    this.payload = { links: links };
+    if (formValue.links.length > 0 && this.links.controls.some(ctrl => ctrl.pristine)) { return; }
     this.links.insert(0, this.getNewLink());
+
   }
 
   private getNewLink(): FormGroup {
-    return this.formBuilder.group({
-      timeElapsed: this.timeBoundaryGroup({}),
+    const link: LinkTask = {
+      timeElapsed: { min: null, target: null, max: null },
       kind: null,
       recipeId: ''
+    }
+    return this.formBuilder.group({
+      link: link
     });
-  }
-
-  private displayRecipeOpt(recipeOpt: Recipe): string {
-    return recipeOpt.title;
-  }
-
-  private setSelectsToDefault(): void {
-    setTimeout(() => {
-      this.selects.forEach((select: MdSelect) => select.writeValue(this.kinds[1].value));
-    }, 0);
   }
 
   private createForm() {
-    const linkFGs = this.data.links.map(link => this.formBuilder.group({
-      timeElapsed: this.timeBoundaryGroup(link.timeElapsed),
-      kind: link.kind,
-      recipeId: link.recipeId
-    }));
+    this.payload = { links: this.data.links };
+    const linkFGs = this.data.links.map(link => {
+      const linkForm: LinkTask = {
+        timeElapsed: { min: link.timeElapsed.min, target: link.timeElapsed.target, max: link.timeElapsed.max },
+        kind: link.kind,
+        recipeId: link.recipeId
+      };
+      return this.formBuilder.group({
+        link: linkForm
+      });
+    });
     this.infoForm = this.formBuilder.group({
       links: this.formBuilder.array(linkFGs)
     });
+    this.links.insert(0, this.getNewLink());
   }
 
 }

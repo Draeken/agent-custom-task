@@ -41,6 +41,8 @@ export class DurationInputComponent implements OnInit, ControlValueAccessor, Val
     { value: 1000 * 60, view: 'min' }
   ];
 
+  @Input() placeholder: string;
+
   @Input() defaultIndex = '1';
 
   @ViewChildren(MdSelect) selects: QueryList<MdSelect>;

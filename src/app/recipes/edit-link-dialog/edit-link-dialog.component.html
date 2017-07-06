@@ -2,32 +2,14 @@
 <md-dialog-content>
   <div [formGroup]="infoForm">
     <div formArrayName="links">
-      <div *ngFor="let link of links.controls; let i=index" [formGroupName]="i">
-        <div class="category">
-          <h4>Recipe name</h4>
-        </div>
-        <app-recipe-input formControlName="recipeId"></app-recipe-input>
-        <div class="category">
-          <h4>Delay</h4>
-          <md-select (change)="selectedKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
-        </div>
-        <div class="delayInput">
-          <md-radio-group formControlName="kind">
-            <md-radio-button *ngFor="let delayKind of delayKinds" [value]="delayKind.value">{{ delayKind.view }}</md-radio-button>
-          </md-radio-group>
-          <div formGroupName="timeElapsed">
-            <md-tab-group [selectedIndex]=selectedKind disableRipple=true>
-              <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="min"></app-duration-input></md-tab>
-              <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="target"></app-duration-input></md-tab>
-              <md-tab><app-duration-input [units]="units" defaultIndex="2" formControlName="max"></app-duration-input></md-tab>
-            </md-tab-group>
-          </div>
-        </div>
+      <div *ngFor="let link of links.controls; let i=index; first as isFirst" [formGroupName]="i">
+        <div class="divider" *ngIf="!isFirst"></div>
+        <app-link-input formControlName="link" [recipeId]="data.recipeId"></app-link-input>
       </div>
     </div>
   </div>
 </md-dialog-content>
 <md-dialog-actions class="ag-dialog-actions">
   <button md-button md-dialog-close>cancel</button>
-  <button md-button [md-dialog-close]="infoForm">ok</button>
+  <button md-button [md-dialog-close]="payload">ok</button>
 </md-dialog-actions>

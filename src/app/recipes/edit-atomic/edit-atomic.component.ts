@@ -10,6 +10,7 @@ import { MdDialog } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
 import { Recipe, TimeBoundary } from '../../core/recipes-state/recipes-state.interface';
+import { RecipeHelper } from '../../core/recipes-state/recipe-helper';
 import { DataInfoDialog,
          EditAtomicDialogComponent } from '../edit-atomic-dialog/edit-atomic-dialog.component';
 
@@ -37,9 +38,9 @@ export class EditAtomicComponent implements OnInit, OnChanges {
   ngOnChanges(s: SimpleChanges) {
     const recipe: Recipe = s.recipe.currentValue;
     if (!recipe)  { return; }
-    this.displayEnd = this.isTimeBoundaryEmpty(recipe.atomic.end) ? false : true;
-    this.displayStart = this.isTimeBoundaryEmpty(recipe.atomic.start) ? false : true;
-    this.displayDuration = this.isTimeBoundaryEmpty(recipe.atomic.duration) ? false : true;
+    this.displayEnd = RecipeHelper.isTimeBoundaryEmpty(recipe.atomic.end) ? false : true;
+    this.displayStart = RecipeHelper.isTimeBoundaryEmpty(recipe.atomic.start) ? false : true;
+    this.displayDuration = RecipeHelper.isTimeBoundaryEmpty(recipe.atomic.duration) ? false : true;
   }
 
   openDialog() {
@@ -53,10 +54,6 @@ export class EditAtomicComponent implements OnInit, OnChanges {
       data: data
     });
     dialogRef.afterClosed().subscribe(this.handleDialogResult.bind(this));
-  }
-
-  private isTimeBoundaryEmpty(obj: TimeBoundary): boolean {
-    return Object.keys(obj).length === 0 || (obj.max == null && obj.min  == null && obj.target == null);
   }
 
   private handleDialogResult(result: FormGroup): void {

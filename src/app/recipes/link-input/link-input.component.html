@@ -1,0 +1,16 @@
+<div [formGroup]="form">
+  <app-recipe-input formControlName="recipeId" [excluded]="excluded" (blur)="onTouched()"></app-recipe-input>
+  <div class="delayInput" fxLayout="row" fxLayoutAlign="start center">
+    <md-radio-group formControlName="kind" fxLayout="column" fxLayoutAlign="space-around">
+      <md-radio-button *ngFor="let delayKind of delayKinds" [value]="delayKind.value">{{ delayKind.view }}</md-radio-button>
+    </md-radio-group>
+    <div formGroupName="timeElapsed">
+      <md-tab-group [selectedIndex]=selectedKind disableRipple=true>
+        <md-tab><app-duration-input placeholder="Delay" [units]="units" defaultIndex="0" formControlName="min"></app-duration-input></md-tab>
+        <md-tab><app-duration-input placeholder="Delay" [units]="units" defaultIndex="0" formControlName="target"></app-duration-input></md-tab>
+        <md-tab><app-duration-input placeholder="Delay" [units]="units" defaultIndex="0" formControlName="max"></app-duration-input></md-tab>
+      </md-tab-group>
+    </div>
+    <md-select (change)="selectedKind=$event.value"><md-option *ngFor="let kind of kinds" [value]="kind.value">{{ kind.view }}</md-option></md-select>
+  </div>
+</div>
