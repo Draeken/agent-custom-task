@@ -10,7 +10,7 @@
   <md-card-content>
     <div class="entry-recurrence" [style.display]="displayRecu ? 'block' : 'none'">
       <h3>Recurrence</h3>
-      {{ recipe.recurrence | timeBoundary:false }}
+      {{ recipe?.recurrence | timeBoundary:false }}
     </div>
   </md-card-content>
 </md-card>

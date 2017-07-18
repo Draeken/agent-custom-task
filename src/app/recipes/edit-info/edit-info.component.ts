@@ -34,13 +34,14 @@ export class EditInfoComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges(s: SimpleChanges) {
     const recipeChange = s.recipe;
     const recipe: Recipe = recipeChange.currentValue;
+    if (!recipe) { return; }
     if (!recipeChange.isFirstChange && !recipe.title) {
       setTimeout(() => this.openDialog(), 0);
     }
   }
 
   ngAfterViewInit() {
-    if (!this.recipe.title) {
+    if (this.recipe && !this.recipe.title) {
       setTimeout(() => this.openDialog(), 0);
     }
   }

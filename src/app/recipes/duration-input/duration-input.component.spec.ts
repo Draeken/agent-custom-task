@@ -1,6 +1,9 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { DurationInputComponent } from './duration-input.component';
+import { RecipesModule } from '../recipes.module';
 
 describe('DurationInputComponent', () => {
   let component: DurationInputComponent;
@@ -8,7 +11,8 @@ describe('DurationInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DurationInputComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

@@ -17,7 +17,8 @@ export class StateIndicatorDirective implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const stateChange = changes['state'];
-    this.el.nativeElement.style.backgroundColor = this.getColor(stateChange.currentValue);
+    const state = Number.parseInt(stateChange.currentValue);
+    this.el.nativeElement.style.backgroundColor = this.getColor(state);
   }
 
   private getColor(state: RecipeStatus): string {

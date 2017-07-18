@@ -38,6 +38,12 @@ export class EditRestrictionComponent implements OnInit, OnChanges {
 
   ngOnChanges(s: SimpleChanges) {
     const recipe: Recipe = s.recipe.currentValue;
+    if (!recipe) {
+      this.displayHour = false;
+      this.displayWeekday = false;
+      this.displayMonth = false;
+      return;
+    }
     this.displayHour = this.isTimeRestrictionFilled(recipe.restrictions.hour);
     this.displayWeekday = this.isTimeRestrictionFilled(recipe.restrictions.weekday);
     this.displayMonth = this.isTimeRestrictionFilled(recipe.restrictions.month);

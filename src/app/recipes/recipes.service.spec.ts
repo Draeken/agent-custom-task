@@ -1,15 +1,19 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
 
 import { RecipesService } from './recipes.service';
+import { WindowRef } from '../core/window.provider';
+import { stateFn } from '../core/recipes-state/recipes-state.function';
+import { RecipesAction } from '../core/recipes-state/actions';
 
 describe('RecipesService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [RecipesService]
-    });
-  });
+  let service: RecipesService;
+  const http: Http = new Http(null, new RequestOptions({}));
 
-  it('should ...', inject([RecipesService], (service: RecipesService) => {
+  it('Should create the service', () => {
+    const actions = new Subject<RecipesAction>();
+    const states = stateFn([], actions);
+    service = new RecipesService(http, actions, states, new WindowRef());
     expect(service).toBeTruthy();
-  }));
+  })
 });

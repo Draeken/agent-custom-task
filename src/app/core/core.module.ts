@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { recipesStateAndDispatcherProvider } from './recipes-state/state-dispatcher.provider';
 import { WindowRef } from './window.provider';
 import { UserService } from './user.service';
+import { DataIoService } from './data-io.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { UserService } from './user.service';
   providers: [
     ...recipesStateAndDispatcherProvider,
     WindowRef,
-    UserService
+    UserService,
+    DataIoService
   ]
 })
 export class CoreModule {

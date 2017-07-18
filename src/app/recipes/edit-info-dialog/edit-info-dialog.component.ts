@@ -5,8 +5,7 @@ import { Component,
 import { FormBuilder,
          FormGroup,
          Validators } from '@angular/forms';
-import { MdDialogRef,
-         MD_DIALOG_DATA } from '@angular/material';
+import { MD_DIALOG_DATA } from '@angular/material';
 
 export interface DataInfoDialog {
   title: string;
@@ -23,7 +22,6 @@ export class EditInfoDialogComponent implements OnInit {
   private infoForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private dialogRef: MdDialogRef<EditInfoDialogComponent>,
               @Inject(MD_DIALOG_DATA) private data: DataInfoDialog) {
     this.createForm();
   }

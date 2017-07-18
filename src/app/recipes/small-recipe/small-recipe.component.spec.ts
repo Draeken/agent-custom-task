@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
+import { RecipesModule } from '../recipes.module';
 import { SmallRecipeComponent } from './small-recipe.component';
 
 describe('SmallRecipeComponent', () => {
@@ -8,7 +10,7 @@ describe('SmallRecipeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SmallRecipeComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ]
     })
     .compileComponents();
   }));

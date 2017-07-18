@@ -8,8 +8,7 @@ import { Component,
          ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder,
          FormGroup } from '@angular/forms';
-import { MdDialogRef,
-         MdSelect,
+import { MdSelect,
          MD_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -36,8 +35,7 @@ export class EditAtomicDialogComponent extends AbstractDialogTb implements OnIni
 
   @ViewChildren(MdSelect) selects: QueryList<MdSelect>;
 
-  constructor(private dialogRef: MdDialogRef<EditAtomicDialogComponent>,
-              @Inject(MD_DIALOG_DATA) private data: DataInfoDialog,
+  constructor(@Inject(MD_DIALOG_DATA) private data: DataInfoDialog,
               formBuilder: FormBuilder) {
     super(formBuilder);
     this.createForm();

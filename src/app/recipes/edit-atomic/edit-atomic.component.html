@@ -10,15 +10,15 @@
   <md-card-content>
     <div class="entry-start" [style.display]="displayStart ? 'block' : 'none'">
       <h3>Start date</h3>
-      {{ recipe.atomic.start | timeBoundary }}
+      {{ recipe?.atomic.start | timeBoundary }}
     </div>
     <div class="entry-length" [style.display]="displayDuration ? 'block' : 'none'">
       <h3>Duration</h3>
-      {{ recipe.atomic.duration | timeBoundary:false }}
+      {{ recipe?.atomic.duration | timeBoundary:false }}
     </div>
     <div class="entry-end" [style.display]="displayEnd ? 'block' : 'none'">
       <h3>End date</h3>
-      {{ recipe.atomic.end | timeBoundary:true:false }}
+      {{ recipe?.atomic.end | timeBoundary:true:false }}
     </div>
   </md-card-content>
 </md-card>

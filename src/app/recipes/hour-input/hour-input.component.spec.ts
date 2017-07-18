@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
+import { RecipesModule } from '../recipes.module';
 import { HourInputComponent } from './hour-input.component';
 
 describe('HourInputComponent', () => {
@@ -8,7 +10,7 @@ describe('HourInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HourInputComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ]
     })
     .compileComponents();
   }));

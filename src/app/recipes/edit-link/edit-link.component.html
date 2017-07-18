@@ -8,7 +8,7 @@
     </div>
   </md-card-title>
   <md-card-content>
-    <div class="entry-link" *ngFor="let link of recipe.links">
+    <div class="entry-link" *ngFor="let link of recipe?.links">
       <h3>Link to {{ link.recipeId | recipeId | async }}</h3>
       <div class="info">
         Delay {{ link.kind }} {{ link.timeElapsed | timeBoundary:false }}

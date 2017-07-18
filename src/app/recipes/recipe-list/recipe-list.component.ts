@@ -4,7 +4,7 @@ import { AfterViewInit,
          ViewChildren,
          ChangeDetectionStrategy,
          QueryList } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/withLatestFrom';
@@ -34,11 +34,10 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.route.params.subscribe((result: Params) => {
-      const params = result;
-      const expandedId = params['id'] || '';
+    this.route.paramMap.subscribe((result: ParamMap) => {
+      const expandedId = result.get('id') || '';
       if (!expandedId) { return; }
-      const instance = params['instance'] || '';
+      const instance = result.get('instance') || '';
       this.recipeComponents.forEach((recipeComp, i) => {
         const recipeId = recipeComp.recipe.id;
         if (expandedId && recipeId !== '' && recipeId === expandedId) {

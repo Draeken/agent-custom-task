@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
+import { RecipesModule } from '../recipes.module';
 import { MonthInputComponent } from './month-input.component';
 
 describe('MonthInputComponent', () => {
@@ -8,7 +10,7 @@ describe('MonthInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MonthInputComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ]
     })
     .compileComponents();
   }));

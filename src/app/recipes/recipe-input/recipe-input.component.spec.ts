@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { Observable } from 'rxjs/Observable';
 
+import { RecipesModule } from '../recipes.module';
 import { RecipeInputComponent } from './recipe-input.component';
+import { recipesState } from '../../core/recipes-state/state-dispatcher.provider';
 
 describe('RecipeInputComponent', () => {
   let component: RecipeInputComponent;
@@ -8,7 +12,10 @@ describe('RecipeInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecipeInputComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ],
+      providers: [
+        { provide: recipesState, useValue: Observable.of([]) }
+      ]
     })
     .compileComponents();
   }));

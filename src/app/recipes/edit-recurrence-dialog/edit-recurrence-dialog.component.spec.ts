@@ -1,5 +1,9 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
+import { RecipesModule } from '../recipes.module';
 import { EditRecurrenceDialogComponent } from './edit-recurrence-dialog.component';
 
 describe('EditRecurrenceDialogComponent', () => {
@@ -8,7 +12,11 @@ describe('EditRecurrenceDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditRecurrenceDialogComponent ]
+      imports: [ NoopAnimationsModule, RecipesModule ],
+      providers: [
+        { provide: MD_DIALOG_DATA, useValue: { recurrence: {} } },
+        { provide: MdDialogRef, useValue: null } ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

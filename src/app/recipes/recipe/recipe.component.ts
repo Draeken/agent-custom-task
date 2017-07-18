@@ -5,7 +5,7 @@ import { Component,
          ChangeDetectionStrategy,
          ChangeDetectorRef,
          EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
 import { transformRecipe } from './recipe.animations';
@@ -26,8 +26,7 @@ export class RecipeComponent implements OnInit {
 
   @Output() selected = new EventEmitter<boolean>();
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
               private ref: ChangeDetectorRef) { }
 
   ngOnInit() {

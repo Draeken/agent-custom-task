@@ -1,6 +1,6 @@
 <div class="container">
-  <div [appStateIndicator]="recipe.state" class="state-indicator"></div>
+  <div [appStateIndicator]="recipe?.status" class="state-indicator"></div>
   <div (click)="onClickToExpand($event)" class="content">
-    <div class="info">{{ recipe.title || 'New recipe...' }}</div>
+    <div class="info">{{ recipe?.title || 'New recipe...' }}</div>
   </div>
 </div>

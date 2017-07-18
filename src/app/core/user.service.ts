@@ -33,7 +33,7 @@ export class UserService {
 
   private initLoggin(): void {
     try {
-      const token = localStorage.getItem(this.userTokenKey);
+      const token = this.getToken();
       if (!token) { console.log('no token'); return; }
       this.userToken = token;
       // Could check on server
@@ -45,7 +45,7 @@ export class UserService {
     if (!body) { console.error(`No server response.`); return false; }
     const userToken = body.token;
     if (!userToken) { console.error(`No token.`, body); return false; }
-    localStorage.setItem(this.userTokenKey, userToken);
+    this.setToken(userToken);
     this.userToken = userToken;
     this.isLoggedObs.next(true);
     console.log('User is now logged.');
@@ -59,6 +59,14 @@ export class UserService {
   private getJsonHeader(): RequestOptions {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return new RequestOptions({ headers: headers });
+  }
+
+  private getToken(): string {
+    return localStorage.getItem(this.userTokenKey);
+  }
+
+  private setToken(token: string): void {
+    localStorage.setItem(this.userTokenKey, token);
   }
 
   private extractBody(res: Response): any {
