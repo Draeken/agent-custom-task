@@ -1,6 +1,6 @@
 import { Recipe, Task } from './recipes-state.interface';
 
-export class UpdateRecipesAction {
+export class PopulateRecipesAction {
   constructor(public recipes: Recipe[]) {}
 }
 
@@ -12,8 +12,8 @@ export class AddRecipeAction {
   constructor(public recipe: Recipe) { throw new Error('unimplemented'); }
 }
 
-export class UpdateRecipeAction {
-  constructor(public legacyRecipe: Recipe, public newRecipe: Recipe) {}
+export class UpdateRecipesAction {
+  constructor(public recipes: { legacy: Recipe, newRecipe: Recipe }[]) {}
 }
 
 export class RemoveRecipeAction {
@@ -21,8 +21,8 @@ export class RemoveRecipeAction {
 }
 
 export type RecipesAction =
-  UpdateRecipesAction |
+  PopulateRecipesAction |
   UpdateRecipeInstancesAction |
   AddRecipeAction |
-  UpdateRecipeAction |
+  UpdateRecipesAction |
   RemoveRecipeAction;

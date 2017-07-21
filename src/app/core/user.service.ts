@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { WindowRef } from '../core/window.provider';
+import { HttpHelper } from '../core/http-helper';
 
 @Injectable()
 export class UserService {
-  private isLoggedObs: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private userToken: string;
+  private _isLoggedObs: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _userToken: string;
   private readonly userTokenKey = 'user-token';
 
   constructor(private windowRef: WindowRef,
@@ -17,7 +18,17 @@ export class UserService {
   }
 
   get isLogged(): boolean {
-    return this.isLoggedObs.value;
+    return this._isLoggedObs.value;
+  }
+
+  get isLoggedObs(): Observable<boolean> {
+    return this._isLoggedObs as Observable<boolean>;
+  }
+
+  get userToken(): { user_token: string } {
+    return {
+      user_token: this._userToken
+    };
   }
 
   login(token: string): Observable<boolean> {
@@ -26,8 +37,8 @@ export class UserService {
       temp_token: token
     };
 
-    return this.http.post(serverUrl + `user/login/`, dataLogin, this.getJsonHeader())
-      .map(this.extractBody)
+    return this.http.post(serverUrl + `user/login/`, dataLogin, HttpHelper.getJsonHeader())
+      .map(HttpHelper.extractBody)
       .map(this.handleUserLogin.bind(this));
   }
 
@@ -35,9 +46,9 @@ export class UserService {
     try {
       const token = this.getToken();
       if (!token) { console.log('no token'); return; }
-      this.userToken = token;
+      this._userToken = token;
       // Could check on server
-      this.isLoggedObs.next(true);
+      this._isLoggedObs.next(true);
     } catch (e) { console.log(e); }
   }
 
@@ -46,19 +57,14 @@ export class UserService {
     const userToken = body.token;
     if (!userToken) { console.error(`No token.`, body); return false; }
     this.setToken(userToken);
-    this.userToken = userToken;
-    this.isLoggedObs.next(true);
+    this._userToken = userToken;
+    this._isLoggedObs.next(true);
     console.log('User is now logged.');
     return true;
   }
 
   private getServerAPIAddress(): string {
     return `${this.windowRef.nativeWindow.location.protocol}//${this.windowRef.nativeWindow.location.hostname}:3001/`;
-  }
-
-  private getJsonHeader(): RequestOptions {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    return new RequestOptions({ headers: headers });
   }
 
   private getToken(): string {
@@ -68,15 +74,4 @@ export class UserService {
   private setToken(token: string): void {
     localStorage.setItem(this.userTokenKey, token);
   }
-
-  private extractBody(res: Response): any {
-    let body;
-    try {
-      body = res.json();
-    } catch (e) {
-      body = undefined;
-    }
-    return body;
-  }
-
 }

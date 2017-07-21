@@ -1,7 +1,17 @@
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+var Schema = mongoose.Schema;
 
-var userSchema = new mongoose.Schema({
-  identifier: { type: String }
+var userSchema = new Schema({
+  identifier: { type: String },
+  recipes: {
+    type: [new Schema({
+      recipe: {},
+      queries: [new Schema({
+        id: { type: Number }
+      }, { _id: false })]
+    })], default: []
+  }
 });
 
 userSchema.statics.findOrCreate = function(userId) {
@@ -14,6 +24,19 @@ userSchema.statics.findOrCreate = function(userId) {
         resolve(user);
       });
     });
+}
+
+userSchema.statics.findByToken = function(token) {
+  let payload = jwt.verify(token, require('./secret').token.client);
+  return this.findById(payload.userId).exec().then(user => {
+    if (!user) { throw new Error(`User ${payload.userId} not found.`); }
+    return user;
+  });
+}
+
+userSchema.methods.getRecipes = function() {
+  return this.recipes.find().select({ queries: 0 }).exec()
+    .then(recipes => recipes.map(recipe => Object.assign({}, recipe.recipe, { id: recipe._id })));
 }
 
 module.exports = mongoose.model('User', userSchema);

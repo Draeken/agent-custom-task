@@ -7,20 +7,15 @@ import { RecipesState, Recipe } from '../core/recipes-state/recipes-state.interf
 import { recipesDispatcher,
          recipesState } from '../core/recipes-state/state-dispatcher.provider';
 import { RecipesAction,
-         UpdateRecipesAction } from '../core/recipes-state/actions';
+         PopulateRecipesAction } from '../core/recipes-state/actions';
 import { RecipeHelper } from '../core/recipes-state/recipe-helper';
-import { WindowRef } from '../core/window.provider';
+
 
 @Injectable()
 export class RecipesService {
-  private readonly draftKey = 'draft-recipes';
-
   constructor(private http: Http,
               @Inject(recipesDispatcher) private dispatcher: Observer<RecipesAction>,
-              @Inject(recipesState) private state: Observable<RecipesState>,
-              private windowRef: WindowRef) {
-    const recipes = this.initDrafts().concat(this.initRecipes());
-    this.dispatcher.next(new UpdateRecipesAction(recipes));
+              @Inject(recipesState) private state: Observable<RecipesState>) {
   }
 
   get filteredRecipes(): Observable<Recipe[]> {
@@ -30,27 +25,4 @@ export class RecipesService {
   get allRecipes(): Observable<Recipe[]> {
     return this.state;
   }
-
-  private initRecipes(): Recipe[] {
-    // Http request;
-    return [];
-  }
-
-  private initDrafts(): Recipe[] {
-    let draft: Recipe[] = [];
-    try {
-      draft = JSON.parse(localStorage.getItem(this.draftKey));
-      if (!draft) { draft = []; }
-    } catch (e) {
-      console.error(e);
-      draft = [];
-    }
-    return draft;
-    // this.dispatcher.next(new UpdateRecipesAction(draft));
-  }
-
-  private getServerAPIAddress(): string {
-    return `${this.windowRef.nativeWindow.location.protocol}//${this.windowRef.nativeWindow.location.hostname}:3001/`;
-  }
-
 }

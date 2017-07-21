@@ -11,7 +11,7 @@ import { Recipe } from '../../core/recipes-state/recipes-state.interface';
 import { RecipeStatus } from '../../core/recipes-state/recipe-state.enum';
 import { recipesDispatcher } from '../../core/recipes-state/state-dispatcher.provider';
 import { RecipesAction,
-         UpdateRecipeAction } from '../../core/recipes-state/actions';
+         UpdateRecipesAction } from '../../core/recipes-state/actions';
 import { RecipeHelper } from '../../core/recipes-state/recipe-helper';
 
 @Component({
@@ -43,7 +43,9 @@ export class ExtendedRecipeComponent implements OnInit, OnChanges {
     if (this.recipeUpdate.status === RecipeStatus.New) {
       this.recipeUpdate.status = RecipeStatus.Draft;
     }
-    this.dispatcher.next(new UpdateRecipeAction(this.recipe, this.recipeUpdate));
+    this.dispatcher.next(new UpdateRecipesAction([{
+      legacy: this.recipe, newRecipe: this.recipeUpdate
+    }]));
   }
 
 }

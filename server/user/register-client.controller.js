@@ -7,10 +7,10 @@ function cleanOldToken() {
   const now = Date.now();
   const fiveMin = 5 * 60 * 1000;
 
-  for (var prop in entryThreshold) {
-    const value = entryThreshold[prop];
+  for (var prop in tempTokenHash) {
+    const value = tempTokenHash[prop];
     if (now - value.iat > fiveMin) {
-      delete entryThreshold[prop];
+      delete tempTokenHash[prop];
     }
   }
 }
