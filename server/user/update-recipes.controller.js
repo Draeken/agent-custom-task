@@ -2,25 +2,6 @@ const mongoose = require('mongoose');
 const User = require('./user.model');
 const NEW_RECIPE_STATUS = 3;
 
-function mergeNewRecipe(userRecipe, newRecipe) {
-  Object.assign(userRecipe.recipe, newRecipe);
-  userRecipe.recipe.id = userRecipe._id;
-  userRecipe.queries = computeQueries(userRecipe.recipe);
-  return userRecipe;
-}
-
-function computeQueries(recipe) {
-  const queries = [];
-  const query = {
-    taskIdentity: { id: new mongoose.Types.ObjectId },
-    transform: {},
-    autoterminate: true,
-    notifyWhenDone: false,
-    dontColide: false,
-    atomic: Object.assign({}, recipe.atomic)
-  }
-}
-
 // recipes: { legacy: Recipe, newRecipe: Recipe }[]
 function updateRecipes(user, changes) {
   const idsMap = changes.map(change => {
@@ -38,9 +19,15 @@ function updateRecipes(user, changes) {
     } else {
       userRecipe.remove();
     }
-    return { legacy: legacy.id, newId: newRecipe }
+    return { legacy: legacy.id, newId: userRecipe ? userRecipe._id : undefined }
   });
   return user.save().then(() => idsMap);
+}
+
+function mergeNewRecipe(userRecipe, newRecipe) {
+  Object.assign(userRecipe.recipe, newRecipe);
+  userRecipe.markModified('recipe');
+  return userRecipe;
 }
 
 module.exports = (options) => {
