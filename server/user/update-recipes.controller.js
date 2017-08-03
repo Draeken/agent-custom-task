@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./user.model');
-const NEW_RECIPE_STATUS = 3;
+const NEW_RECIPE_STATUS = 0;
 
 // recipes: { legacy: Recipe, newRecipe: Recipe }[]
 function updateRecipes(user, changes) {
@@ -9,17 +9,17 @@ function updateRecipes(user, changes) {
     const newRecipe = change.newRecipe;
     let userRecipe;
     if (legacy.status !== NEW_RECIPE_STATUS) {
-      userRecipe = user.recipes.id(legacy.id);
+      userRecipe = user.recipeInfos.id(legacy.id);
     } else {
-      user.recipes.push({ recipe: {}, queries: [] });
-      userRecipe = user.recipes[user.recipes.length - 1];
+      user.recipeInfos.push({ recipe: {}, queries: [] });
+      userRecipe = user.recipeInfos[user.recipeInfos.length - 1];
     }
     if (newRecipe) {
       mergeNewRecipe(userRecipe, newRecipe);
     } else {
       userRecipe.remove();
     }
-    return { legacy: legacy.id, newId: userRecipe ? userRecipe._id : undefined }
+    return { legacyId: legacy.id, newId: userRecipe ? userRecipe._id : undefined }
   });
   return user.save().then(() => idsMap);
 }

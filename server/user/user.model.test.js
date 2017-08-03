@@ -9,13 +9,13 @@ beforeEach(() => {
 describe('User model', () => {
   it('should work as expected', (done) => {
     const user = new User();
-    user.recipes.push({ recipe: { links: [], status: 0 }, queries: [] });
-    const userRecipe = user.recipes[0];
+    user.recipeInfos.push({ recipe: { links: [], status: 0 }, queries: [] });
+    const userRecipe = user.recipeInfos[0];
     Object.assign(userRecipe.recipe, { description: 'toto' });
     user.save()
       .then(user => {
         user._id.should.be.a('object');
-        const recipe = user.recipes[0];
+        const recipe = user.recipeInfos[0];
         recipe._id.should.be.a('object');
         recipe.recipe.description.should.equal('toto');
         recipe.queries.should.have.lengthOf(1);

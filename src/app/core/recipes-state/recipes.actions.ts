@@ -3,7 +3,7 @@ import 'rxjs/add/operator/scan';
 
 import { RecipesState } from './recipes-state.interface';
 import { RecipeStatus } from './recipe-state.enum';
-import { AddRecipeAction,
+import { ChangeRecipesId,
          RecipesAction,
          RemoveRecipeAction,
          UpdateRecipesAction,
@@ -17,6 +17,8 @@ export function recipesHandler(initState: RecipesState, actions: Observable<Reci
       return populateRecipes(recipes, action);
     } else if (action instanceof UpdateRecipesAction) {
       return updateRecipes(recipes, action);
+    } else if (action instanceof ChangeRecipesId) {
+      return changeRecipesId(recipes, action);
     } else {
       return recipes;
     }
@@ -41,5 +43,14 @@ function updateRecipes(recipes: RecipesState, action: UpdateRecipesAction): Reci
     }
   });
   if (!result.some(recipe => recipe.status === RecipeStatus.New)) { result.unshift(RecipeHelper.recipeFactory()); }
+  return result;
+}
+
+function changeRecipesId(recipes: RecipesState, action: ChangeRecipesId): RecipesState {
+  const result = recipes.slice();
+  action.ids.forEach(idInfo => {
+    const recipe = result.find(r => r.id === idInfo.legacyId);
+    recipe.id = idInfo.newId;
+  });
   return result;
 }

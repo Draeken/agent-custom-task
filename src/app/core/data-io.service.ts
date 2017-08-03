@@ -6,8 +6,10 @@ import { Subject } from 'rxjs/Subject';
 
 import { RecipesState, Recipe } from '../core/recipes-state/recipes-state.interface';
 import { RecipeStatus } from '../core/recipes-state/recipe-state.enum';
+import { RecipeHelper } from '../core/recipes-state/recipe-helper';
 import { RecipesAction,
          UpdateRecipesAction,
+         ChangeRecipesId,
          PopulateRecipesAction } from '../core/recipes-state/actions';
 import { recipesDispatcher,
          recipesState } from './recipes-state/state-dispatcher.provider'
@@ -40,7 +42,7 @@ export class DataIoService {
   }
 
   private handleRequestResponse(body: any): void {
-    const recipes = body.recipes;
+    const recipes = body.recipes.map(RecipeHelper.normalizeRecipe);
     this.dispatcher.next(new PopulateRecipesAction(recipes));
   }
 
@@ -60,7 +62,7 @@ export class DataIoService {
 
   private handleNotifyResponse(body: any): void {
     const ids = body.ids;
-    console.log(ids);
+    this.dispatcher.next(new ChangeRecipesId(ids));
   }
 
 }

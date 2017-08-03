@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { DataIoService } from './core/data-io.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   private title = 'Agent Custom Task';
+
+  constructor(private dataIoService: DataIoService) {}
 }

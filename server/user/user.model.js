@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
-const ACTIVE_RECIPE_STATUS = 0;
+const ACTIVE_RECIPE_STATUS = 1;
 
-const recipeSchema = new Schema({
+const recipeInfoSchema = new Schema({
   recipe: {},
   queries: [{}]
 });
 
 const userSchema = new Schema({
   identifier: { type: String },
-  recipes: { type: [recipeSchema], default: [] }
+  recipeInfos: { type: [recipeInfoSchema], default: [] }
 });
 
 userSchema.statics.findOrCreate = function(userId) {
@@ -34,22 +34,25 @@ userSchema.statics.findByToken = function(token) {
 }
 
 userSchema.methods.getRecipes = function() {
-  return this.recipes.find().select({ queries: 0 }).exec()
-    .then(recipes => recipes.map(recipe => Object.assign({}, recipe.recipe, { id: recipe._id })));
+  return this.recipeInfos.map(recipeInfo => Object.assign({}, recipeInfo.recipe, { id: recipeInfo._id }));
 }
 
-function computeQuery(recipe, recipeList, notifier) {
-  if (recipe.recipe.status !== ACTIVE_RECIPE_STATUS) { recipe.queries = []; return; }
-  // TODO: Handle recurrence, time restriction & links
-  recipe.queries = [];
-  recipe.queries.push({
+function computeQuery(recipeInfo, recipeInfoList, notifier) {
+  if (recipeInfo.recipe.status !== ACTIVE_RECIPE_STATUS) { recipeInfo.queries = []; return; }
+  // TODO: Handle links
+  recipeInfo.queries = [];
+  recipeInfo.queries.push({
     taskIdentity: { id: new mongoose.Types.ObjectId },
     transform: {},
     autoterminate: true,
-    notifyWhenDone: false,
+    notifyWhenDone: timeBoundaryNotEmpty(recipeInfo.recipe.recurrence),
     dontColide: false,
-    atomic: Object.assign({}, recipe.atomic)
+    atomic: Object.assign({}, recipeInfo.recipe.atomic)
   });
+}
+
+function timeBoundaryNotEmpty(timeBoundary) {
+  return timeBoundary.target != null || timeBoundary.min != null || timeBoundary.max != null;
 }
 
 function notifierFactory() {
@@ -72,19 +75,19 @@ function notifierFactory() {
 
 userSchema.pre('save', function(next) {
   const notifier = notifierFactory();
-  this.recipes.forEach(recipe => {
-    if (!recipe.isModified('recipe')) { return; }
-    computeQuery(recipe, this.recipe, notifier);
-    notifier.notify(recipe);
+  this.recipeInfos.forEach(recipeInfo => {
+    if (!recipeInfo.isModified('recipe')) { return; }
+    computeQuery(recipeInfo, this.recipeInfos, notifier);
+    notifier.notify(recipeInfo);
   });
   next();
 });
 
-recipeSchema.pre('save', function(next) {
+recipeInfoSchema.pre('save', function(next) {
   if (!this.isModified()) { return next(); }
   const user = this.ownerDocument();
-  user.recipes.forEach(recipe => {
-    if (!recipe.recipe.links.find(link => link.recipeId == this.recipe.id)) { return; }
+  user.recipeInfos.forEach(recipeInfo => {
+    if (!recipeInfo.recipe.links.find(link => link.recipeId == this.recipe.id)) { return; }
     recipe.markModified('recipe');
   })
   this.queries = [];
@@ -92,13 +95,13 @@ recipeSchema.pre('save', function(next) {
   next();
 })
 
-recipeSchema.post('remove', function (removedRecipe) {
+recipeInfoSchema.post('remove', function (removedRecipe) {
   const user = removedRecipe.ownerDocument();
-  user.recipes.forEach(recipe => {
-    const cleanedLinks = recipe.recipe.links.filter(link => link.recipeId != removedRecipe.recipe.id);
-    if (cleanedLinks.length === recipe.recipe.links.length) { return; }
-    recipe.recipe.links = cleanedLinks;
-    recipe.markModified('recipe.links');
+  user.recipeInfos.forEach(recipeInfo => {
+    const cleanedLinks = recipeInfo.recipe.links.filter(link => link.recipeId != removedRecipe.recipe.id);
+    if (cleanedLinks.length === recipeInfo.recipe.links.length) { return; }
+    recipeInfo.recipe.links = cleanedLinks;
+    recipeInfo.markModified('recipe.links');
   })
 });
 

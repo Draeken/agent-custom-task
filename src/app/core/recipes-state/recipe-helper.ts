@@ -37,4 +37,8 @@ export class RecipeHelper {
     clone.links = base.links.slice();
     return clone;
   }
+
+  static normalizeRecipe(recipe: any): Recipe {
+    return Object.assign(RecipeHelper.recipeFactory(), recipe);
+  }
 }

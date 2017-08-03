@@ -4,7 +4,7 @@ module.exports = (options) => {
   const asOpt = { autoSchedule: options.autoSchedule };
   /**
    * body: { token: token }
-   * response: request: AgentQuery[] || AgentQuery
+   * response: queries: AgentQuery[] || AgentQuery
    */
   router.post('/request', require('./request.controller')(asOpt));
 

@@ -4,8 +4,7 @@ export enum RestrictionCondition {
 }
 
 export enum RecipeStatus {
+  New,
   Active,
-  Archive,
-  Draft,
-  New
+  Inactive
 }

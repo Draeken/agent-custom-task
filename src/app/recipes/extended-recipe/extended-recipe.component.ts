@@ -41,7 +41,7 @@ export class ExtendedRecipeComponent implements OnInit, OnChanges {
 
   private onChange(): void {
     if (this.recipeUpdate.status === RecipeStatus.New) {
-      this.recipeUpdate.status = RecipeStatus.Draft;
+      this.recipeUpdate.status = RecipeStatus.Inactive;
     }
     this.dispatcher.next(new UpdateRecipesAction([{
       legacy: this.recipe, newRecipe: this.recipeUpdate

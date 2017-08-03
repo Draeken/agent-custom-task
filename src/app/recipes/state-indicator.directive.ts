@@ -25,9 +25,7 @@ export class StateIndicatorDirective implements OnChanges {
     switch (state) {
       case RecipeStatus.Active:
         return '#4CAF50';
-      case RecipeStatus.Archive:
-        return '#607D8B';
-      case RecipeStatus.Draft:
+      case RecipeStatus.Inactive:
         return '#FFC107';
       default:
         return '';
