@@ -6,8 +6,7 @@ import { AfterViewInit,
          QueryList } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/combineLatest';
 
 import { Recipe } from '../../core/recipes-state/recipes-state.interface';
 import { RecipesService } from '../recipes.service';
@@ -34,24 +33,29 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.route.paramMap.subscribe((result: ParamMap) => {
-      const expandedId = result.get('id') || '';
-      if (!expandedId) { return; }
-      const instance = result.get('instance') || '';
-      this.recipeComponents.forEach((recipeComp, i) => {
-        const recipeId = recipeComp.recipe.id;
-        if (expandedId && recipeId !== '' && recipeId === expandedId) {
-          recipeComp.expand(instance);
-        } else {
-          recipeComp.retract();
-        }
-      });
-    });
+    const recipeCompsObs = this.recipeComponents.changes.startWith(this.recipeComponents);
+    this.route.paramMap
+      .combineLatest(recipeCompsObs)
+      .subscribe(this.handleParamChange.bind(this));
   }
 
   onClick() {
     console.log('user click on main container.');
     this.router.navigate(['/']);
+  }
+
+  private handleParamChange([params, recipes]: [ParamMap, QueryList<RecipeComponent>]): void {
+    const expandedId = params.get('id') || '';
+    if (!expandedId) { return; }
+    const instance = params.get('instance') || '';
+    recipes.forEach((recipeComp, i) => {
+      const recipeId = recipeComp.recipe.id;
+      if (expandedId && recipeId !== '' && recipeId === expandedId) {
+        recipeComp.expand(instance);
+      } else {
+        recipeComp.retract();
+      }
+    });
   }
 
   private trackByFn(i: number, item: Recipe): string {
